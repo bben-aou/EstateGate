@@ -1,7 +1,7 @@
 import { Response , Request } from "express";
 
 export const register= (res  : Response, req : Request) => {
-    console.log('register endpoint',);
+    console.log('register endpoint');
 
 };
 export const login= (res : Response, req : Request) => {
