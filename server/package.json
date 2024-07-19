@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "start": "ts-node -r tsconfig-paths/register src/server.ts",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "ninja" : "console-ninja npx ts-node -r tsconfig-paths/register src/server.ts"
   },
   "keywords": [],
   "author": "",
