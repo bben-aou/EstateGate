@@ -1,0 +1,9 @@
+{
+    "logoTitle" : "Estate Gate",
+    "menuItemsHome" : "Home",
+    "menuItemsAbout" : "About",
+    "menuItemsContact" : "Contact",
+    "menuItemsAgents" : "Agents",
+    "authenticationLogin" : "Login",
+    "authenticationSignUp" : "Sign up"
+}
