@@ -24,6 +24,10 @@ export default {
         }
       }
     },
+    screens: {
+      'md': '640px',
+      'lg': '1025px',
+    },
   },
   plugins: [],
 }
