@@ -10,14 +10,17 @@ import Agents from "@pages/agents/Agents";
 import NotFound from "@pages/notFound/NotFound";
 import Login from "@pages/login/Login";
 import SignUp from "@pages/sign-up/SignUp";
+import { HeaderProvider } from "@global/states/providers/HeaderProvider";
 
 function App() {
   const [locale] = useState<Locale>('en');
   return (
     <IntlManager locale={locale}>
       <Router>
-        <div className="bg-light-5 h-screen w-screen font-inter">
-          <Header/>
+        <div className="bg-light-5 h-screen w-screen font-inter absolute">
+          <HeaderProvider>
+            <Header/>
+          </HeaderProvider>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
