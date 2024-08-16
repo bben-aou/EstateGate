@@ -1,8 +1,7 @@
-import React from 'react'
 
 const Login = () => {
   return (
-    <div>Login</div>
+    <div className='w-full mt-[8vh] h-[92vh] bg-violet-500'>Login</div>
   )
 }
 export default Login;
