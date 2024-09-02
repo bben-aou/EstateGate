@@ -9,7 +9,6 @@ export const HeaderProvider = ({ children }: THeaderProvider) => {
     () => ({ isHamburgerMenuOpen, setIsHamburgerMenuOpen }),
     [isHamburgerMenuOpen, setIsHamburgerMenuOpen]
   );
-  console.log('inside here ')
   return (
     <HeaderContext.Provider value={memoizedValue}>
       {children}
