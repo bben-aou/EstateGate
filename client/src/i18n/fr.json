@@ -6,5 +6,14 @@
     "menuItemsAgents" : "Agents",
     "authenticationLogin" : "Se Connecter",
     "authenticationSignUp" : "S'inscrire",
-    "errorHeaderProvider" : "HeaderContext doit être utilisé dans un HeaderProvider"
+    "errorHeaderProvider" : "HeaderContext doit être utilisé dans un HeaderProvider",
+    "home.hero.section.greeting" : "Welcome To Estate Gate",
+    "home.hero.section.title" : "Find your place of dream",
+    "home.hero.section.info" : "Your will have everything nearby supermarket, buses , station, the carmen neighborhood, etc",
+    "home.statistics.section.title" : "Our Growth",
+    "Select.not.found": "No option found.",
+    "Select.search.placeholder": "Search option...",
+    "filter.propertyFilter.buy" : "Buy",
+    "filter.propertyFilter.rent" : "Rent",
+    "filter.propertyFilter.sell" : "Sell"
 }
