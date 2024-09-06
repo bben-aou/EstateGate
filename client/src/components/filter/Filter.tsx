@@ -1,57 +1,104 @@
 import { RiSearchLine } from "react-icons/ri";
-import { FormProvider, useForm } from "react-hook-form";
-import Select from "@/components/inputs/select/Select";
+import { FormProvider } from "react-hook-form";
+import ComboBox from "@/components/inputs/comboBox/ComboBox";
 import { location } from "@/YummyData/locationData";
 import PropertyTypeFilter from "@/components/filter/PropertyTypeFilter";
 import { getPropertyOptions } from "@/constants/options/propertyOptions";
 import { IFilter } from "@/interfaces/filter/types";
 import { useIntl } from "react-intl";
+import clsx from "clsx";
+import ControlledInput from "@components/inputs/controlledInputs/ControlledInput";
+import { InputType, PriceRangeOption, PropertyTypeOption } from "@/interfaces/inputs/types";
+import { LocationData } from "@/interfaces/data/location";
+import useFilterForm from "@/hooks/froms/filter/useFilterForm";
+import FilterInputItem from "@components/filter/FilterInputItem";
+import Select from "@components/inputs/select/Select";
+import { propertyTypeOptions } from "@/constants/inputs/select/propertyTypes";
+import { priceRangeOptions } from "@/constants/inputs/select/priceRange";
 
 const Filter = (props: IFilter) => {
   const { containerStyle } = props;
   const intl = useIntl();
-  const methods = useForm({
-    defaultValues: {
-      propertyType: "buy",
-      location: "",
-    },
-  });
-  const { register, handleSubmit, watch, setValue } = methods;
-  const onSubmit = (data: any) => {
-    console.log(data);
-  };
+
+  const { handleSubmit, methods, onSubmit, control, setValue, watch } =
+    useFilterForm();
 
   const propertyOptions = getPropertyOptions(intl.formatMessage);
+
+  const defaultContainerStyle = "w-full mt-[20px]";
 
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className={`w-full mt-[20px] ${containerStyle}`}>
+        <div className={clsx(defaultContainerStyle, { containerStyle })}>
           <PropertyTypeFilter
             options={propertyOptions}
-            selectedOption={watch("propertyType")}
-            onSelectOption={(value: string) => setValue("propertyType", value)}
+            selectedOption={watch("propertyActionType")}
+            onSelectOption={(value: string) =>
+              setValue("propertyActionType", value)
+            }
           />
 
           <div className="w-full mt-[8px] text-black">
             <div className="w-full h-[85px] bg-light-0 rounded-[8px] p-[10px] flex items-center gap-[5px] px-[10px]">
-              <div className="h-full w-[100px] border-[1px] border-light-30 rounded-[8px] flex-1 py-[5px] px-[10px]">
-                <h1 className="text-[14px] text-light-40">Location</h1>
-                <Select
-                  options={location}
-                  getOptionLabel={(option) => option.display_name}
-                  label="Select Your Location"
-                  {...register("location")}
-                />
-              </div>
-              <div className="h-full w-[100px] border-[1px] border-light-30 rounded-[8px] flex-1 py-[5px] px-[10px]">
-                <h1 className="text-[14px] text-light-40">Type</h1>
-                <h1 className="tracking-wide">Villa</h1>
-              </div>
-              <div className="h-full w-[100px] border-[1px] border-light-30 rounded-[8px] flex-1 py-[5px] px-[10px]">
-                <h1 className="text-[14px] text-light-40">Price Range</h1>
-                <h1 className="tracking-wide">1200$ - 5000$</h1>
-              </div>
+              <FilterInputItem
+                label={intl.formatMessage({ id : 'filter.input.location.label'})}
+                children={
+                  <ControlledInput
+                    name="location"
+                    control={control}
+                    component={ComboBox<LocationData>}
+                    inputType={InputType.SELECT}
+                    inputProps={{
+                      options: location,
+                      getOptionLabel: (option: LocationData) =>
+                        option.display_name,
+                      label: intl.formatMessage({
+                        id: "Select.location.search.placeholder",
+                      }),
+                      searchPlaceholder: intl.formatMessage({ id :  'Select.search'}),
+                    }}
+                  />
+                }
+              />
+
+              <FilterInputItem
+                label={intl.formatMessage({ id : 'filter.input.propertyType.label'})}
+                children={
+                  <ControlledInput
+                    name="propertyType"
+                    control={control}
+                    component={Select<PropertyTypeOption>}
+                    inputType={InputType.SELECT}
+                    inputProps={{
+                      options: propertyTypeOptions,
+                      getLabel: (option) => option.label,
+                      getValue: (option) => option.value,
+                      getOptionKey: (option) => option.label,
+                      label: intl.formatMessage({id : 'filter.input.propertyType.dropdown.label'}),
+                    }}
+                  />
+                }
+              />
+
+              <FilterInputItem
+                label= {intl.formatMessage({ id : 'filter.input.priceRange.label'})}
+                children={
+                  <ControlledInput
+                    name="priceRange"
+                    control={control}
+                    component={Select<PriceRangeOption>}
+                    inputType={InputType.SELECT}
+                    inputProps={{
+                      options: priceRangeOptions,
+                      getLabel: (option) => option.label,
+                      getValue: (option) => option?.value,
+                      getOptionKey: (option) => option.label,
+                      label: intl.formatMessage({id : 'filter.input.priceRange.dropdown.label'}),
+                    }}
+                  />
+                }
+              />
               <div className="px-[10px] h-[60%] rounded-lg bg-light-30 flex items-center justify-center">
                 <RiSearchLine
                   className="cursor-pointer"

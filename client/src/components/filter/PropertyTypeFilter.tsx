@@ -6,7 +6,7 @@ const PropertyTypeFilter = (props: IPropertyTypeFilterProps) => {
   const { options } = props;
 
   const { setValue, watch } = useFormContext();
-  const selectedOption = watch("propertyType");
+  const selectedOption = watch("propertyActionType");
   return (
     <div className="w-full flex gap-[5px]">
       {options.map((option, index) => (
@@ -19,7 +19,7 @@ const PropertyTypeFilter = (props: IPropertyTypeFilterProps) => {
               ? "bg-button-active text-light-0"
               : "bg-light-5"
           }`}
-          onClick={() => setValue("propertyType", option.value)}
+          onClick={() => setValue("propertyActionType", option.value)}
         >
           {option.label}
         </Button>
