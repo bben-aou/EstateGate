@@ -12,8 +12,14 @@
     "home.hero.section.info" : "Your will have everything nearby supermarket, buses , station, the carmen neighborhood, etc",
     "home.statistics.section.title" : "Our Growth",
     "Select.not.found": "No option found.",
-    "Select.search.placeholder": "Search option...",
+    "Select.search": "Search...",
+    "Select.location.search.placeholder": "Find Location",
     "filter.propertyFilter.buy" : "Buy",
     "filter.propertyFilter.rent" : "Rent",
-    "filter.propertyFilter.sell" : "Sell"
+    "filter.propertyFilter.sell" : "Sell",
+    "filter.input.location.label" : "Location",
+    "filter.input.propertyType.label" : "Property Type",
+    "filter.input.propertyType.dropdown.label" : "Select Type",
+    "filter.input.priceRange.label" : "Price Range",
+    "filter.input.priceRange.dropdown.label" : "Select range"
 }

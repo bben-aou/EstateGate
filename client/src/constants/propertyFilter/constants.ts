@@ -4,3 +4,8 @@ export const PROPERTY_OPTIONS = [
     { label: "Sell", value: "sell" },
   ];
 
+export enum PropertyType  {
+  BUY = "buy",
+  RENT = "rent",
+  SELL = "sell",
+}

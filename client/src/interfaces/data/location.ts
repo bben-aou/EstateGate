@@ -3,7 +3,7 @@ export type LocationData = {
     licence: string;
     osm_type: string;
     osm_id: string;
-    boundingbox: [string, string, string, string];
+    boundingbox: string[];
     lat: string;
     lon: string;
     display_name: string;
