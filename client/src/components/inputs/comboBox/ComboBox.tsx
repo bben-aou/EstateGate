@@ -17,15 +17,18 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useIntl } from "react-intl";
+import { LoadingSpinner } from "@/components/ui/loadingSpinner";
 
 export type ISelectProps<T> = {
-  options: T[];
+  options?: T[];
   getOptionLabel: (option: T) => string;
   buttonClassName?: string;
   selectClassName?: string;
   label: string;
   searchPlaceholder?: string;
   onSelect?: (option: T | null) => void;
+  onSearch?: (option: string) => void;
+  isDataLoading? : boolean
 } & Omit<React.ComponentProps<"button">, "onSelect">;
 
 const ComboBox = <T,>({
@@ -36,6 +39,8 @@ const ComboBox = <T,>({
   label,
   searchPlaceholder,
   onSelect,
+  onSearch,
+  isDataLoading,
   ...rest
 }: ISelectProps<T>) => {
   const [open, setOpen] = React.useState(false);
@@ -71,13 +76,16 @@ const ComboBox = <T,>({
                 id: "Select.search.placeholder",
               })
             }
+            onChangeCapture={onSearch ? (e) => onSearch(e.currentTarget.value) : ()=>{}}
           />
-          <CommandList>
-            <CommandEmpty>
-              {intl.formatMessage({ id: "Select.not.found" })}
+          <CommandList >
+            <CommandEmpty >
+              <div className="w-full h-full flex items-center justify-center">
+                {isDataLoading ? <LoadingSpinner /> : intl.formatMessage({ id: "Select.not.found" })}
+              </div>
             </CommandEmpty>
             <CommandGroup>
-              {options.map((option) => {
+              {options?.map((option) => {
                 const label = getOptionLabel(option);
                 return (
                   <CommandItem
