@@ -21,5 +21,9 @@
     "filter.input.propertyType.label" : "Property Type",
     "filter.input.propertyType.dropdown.label" : "Select Type",
     "filter.input.priceRange.label" : "Price Range",
-    "filter.input.priceRange.dropdown.label" : "Select range"
+    "filter.input.priceRange.dropdown.label" : "Select range",
+    "filter.input.location.validation.required.message.error" : "Please select a valid location.",
+    "filter.select.propertyAction.validation.required.message.error" : "Please select an action (Sell, Buy, or Rent).",
+    "filter.input.propertyType.validation.required.message.error" : "Please select a property type",
+    "filter.toast.form.error.header": "Filter Form Error :"
 }

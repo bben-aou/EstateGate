@@ -38,6 +38,10 @@ export default {
           10: "#2d9491",
           20: "#ffc35e",
         },
+        error: {
+          10: "#ffebf0",
+          20: "#fc5d6d",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

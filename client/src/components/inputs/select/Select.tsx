@@ -17,10 +17,10 @@ interface SelectProps<T> {
   getOptionKey: (option: T) => string;
   onChange?: (value: T | string | PriceRangeValue) => void;
   label?: string;
-  SelectClassName?: string;
+  selectClassName?: string;
 }
 
-const Select = <T,>({ options, getLabel, getValue, getOptionKey, onChange, label, SelectClassName }: SelectProps<T>) => {
+const Select = <T,>({ options, getLabel, getValue, getOptionKey, onChange, label, selectClassName }: SelectProps<T>) => {
   const handleValueChange = (value: string) => {
     const selectedOption = options.find(option => getOptionKey(option) === value);
     if (selectedOption) {
@@ -30,7 +30,7 @@ const Select = <T,>({ options, getLabel, getValue, getOptionKey, onChange, label
   return (
     <SelectCn onValueChange={handleValueChange}>
       <SelectTrigger
-        className={`w-full justify-between pl-0 border-none shadow-none hover:bg-transparent font-normal text-black truncate focus:ring-offset-0 focus:ring-0 ${SelectClassName}`}
+        className={`w-full justify-between pl-0 border-none shadow-none hover:bg-transparent font-normal text-black truncate focus:ring-offset-0 focus:ring-0 ${selectClassName}`}
       >
         <SelectValue placeholder={label} title={label}/>
       </SelectTrigger>

@@ -15,12 +15,13 @@ import FilterInputItem from "@components/filter/FilterInputItem";
 import Select from "@components/inputs/select/Select";
 import { propertyTypeOptions } from "@/constants/inputs/select/propertyTypes";
 import { priceRangeOptions } from "@/constants/inputs/select/priceRange";
+import { cn } from "@/lib/utils";
 
 const Filter = (props: IFilter) => {
   const { containerStyle } = props;
   const intl = useIntl();
 
-  const { handleSubmit, methods, onSubmit, control, setValue, watch } =
+  const { handleSubmit, methods, onSubmit, control, setValue, watch, errors , onError} =
     useFilterForm();
 
   const propertyOptions = getPropertyOptions(intl.formatMessage);
@@ -29,7 +30,7 @@ const Filter = (props: IFilter) => {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit, onError)}>
         <div className={clsx(defaultContainerStyle, { containerStyle })}>
           <PropertyTypeFilter
             options={propertyOptions}
@@ -43,6 +44,7 @@ const Filter = (props: IFilter) => {
             <div className="w-full h-[85px] bg-light-0 rounded-[8px] p-[10px] flex items-center gap-[5px] px-[10px]">
               <FilterInputItem
                 label={intl.formatMessage({ id : 'filter.input.location.label'})}
+                errorClassName={cn({'border-error-20 bg-error-10': errors.location})}
                 children={
                   <ControlledInput
                     name="location"
@@ -57,6 +59,7 @@ const Filter = (props: IFilter) => {
                         id: "Select.location.search.placeholder",
                       }),
                       searchPlaceholder: intl.formatMessage({ id :  'Select.search'}),
+                      buttonClassName: cn({"text-error-20" : errors.location})
                     }}
                   />
                 }
@@ -64,6 +67,7 @@ const Filter = (props: IFilter) => {
 
               <FilterInputItem
                 label={intl.formatMessage({ id : 'filter.input.propertyType.label'})}
+                errorClassName={cn({'border-error-20 bg-error-10': errors.propertyType})}
                 children={
                   <ControlledInput
                     name="propertyType"
@@ -76,6 +80,7 @@ const Filter = (props: IFilter) => {
                       getValue: (option) => option.value,
                       getOptionKey: (option) => option.label,
                       label: intl.formatMessage({id : 'filter.input.propertyType.dropdown.label'}),
+                      selectClassName : cn({"text-error-20" : errors.propertyType})
                     }}
                   />
                 }
@@ -83,6 +88,7 @@ const Filter = (props: IFilter) => {
 
               <FilterInputItem
                 label= {intl.formatMessage({ id : 'filter.input.priceRange.label'})}
+                errorClassName={cn({'border-error-20 bg-error-10': errors.priceRange})}
                 children={
                   <ControlledInput
                     name="priceRange"
@@ -95,6 +101,7 @@ const Filter = (props: IFilter) => {
                       getValue: (option) => option?.value,
                       getOptionKey: (option) => option.label,
                       label: intl.formatMessage({id : 'filter.input.priceRange.dropdown.label'}),
+                      selectClassName : cn({"text-error-20" : errors.priceRange})
                     }}
                   />
                 }
@@ -102,7 +109,7 @@ const Filter = (props: IFilter) => {
               <div className="px-[10px] h-[60%] rounded-lg bg-light-30 flex items-center justify-center">
                 <RiSearchLine
                   className="cursor-pointer"
-                  onClick={handleSubmit(onSubmit)}
+                  onClick={handleSubmit(onSubmit, onError)}
                 />
               </div>
             </div>
