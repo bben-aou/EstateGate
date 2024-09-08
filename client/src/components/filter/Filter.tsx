@@ -1,7 +1,6 @@
 import { RiSearchLine } from "react-icons/ri";
 import { FormProvider } from "react-hook-form";
 import ComboBox from "@/components/inputs/comboBox/ComboBox";
-import { location } from "@/YummyData/locationData";
 import PropertyTypeFilter from "@/components/filter/PropertyTypeFilter";
 import { getPropertyOptions } from "@/constants/options/propertyOptions";
 import { IFilter } from "@/interfaces/filter/types";
@@ -16,6 +15,8 @@ import Select from "@components/inputs/select/Select";
 import { propertyTypeOptions } from "@/constants/inputs/select/propertyTypes";
 import { priceRangeOptions } from "@/constants/inputs/select/priceRange";
 import { cn } from "@/lib/utils";
+import { useLocationSearch } from "@/services/locationService";
+import { useState } from "react";
 
 const Filter = (props: IFilter) => {
   const { containerStyle } = props;
@@ -23,9 +24,9 @@ const Filter = (props: IFilter) => {
 
   const { handleSubmit, methods, onSubmit, control, setValue, watch, errors , onError} =
     useFilterForm();
-
+  const [query, setQuery] = useState<string>('');
+  const {data,isLoading} = useLocationSearch(query, 300);
   const propertyOptions = getPropertyOptions(intl.formatMessage);
-
   const defaultContainerStyle = "w-full mt-[20px]";
 
   return (
@@ -52,15 +53,18 @@ const Filter = (props: IFilter) => {
                     component={ComboBox<LocationData>}
                     inputType={InputType.SELECT}
                     inputProps={{
-                      options: location,
+                      options: data,
                       getOptionLabel: (option: LocationData) =>
                         option.display_name,
                       label: intl.formatMessage({
                         id: "Select.location.search.placeholder",
                       }),
                       searchPlaceholder: intl.formatMessage({ id :  'Select.search'}),
-                      buttonClassName: cn({"text-error-20" : errors.location})
-                    }}
+                      buttonClassName: cn({"text-error-20" : errors.location}),
+                      onSearch : (v: string) => setQuery(v),
+                      isDataLoading : isLoading
+                    }
+                    }
                   />
                 }
               />
