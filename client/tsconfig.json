@@ -27,7 +27,8 @@
       "@styles/*": ["src/styles/*"],
       "@interfaces/*": ["src/interfaces/*"],
       "@utils/*": ["src/utils/*"],
-      "@global/*": ["src/global/*"]
+      "@global/*": ["src/global/*"],
+      "@store/*": ["src/store/*"]
     },
     "types": ["node", "react", "react-dom"]     // Add types for node, react, and react-dom
   },

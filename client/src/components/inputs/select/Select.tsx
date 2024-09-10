@@ -32,9 +32,9 @@ const Select = <T,>({ options, getLabel, getValue, getOptionKey, onChange, label
       <SelectTrigger
         className={`w-full justify-between pl-0 border-none shadow-none hover:bg-transparent font-normal text-black truncate focus:ring-offset-0 focus:ring-0 ${selectClassName}`}
       >
-        <SelectValue placeholder={label} title={label}/>
+        <SelectValue placeholder={label} title={label} />
       </SelectTrigger>
-      <SelectContent className="w-[9.5vw] ml-[-10px]">
+      <SelectContent className="absolute left-0 ml-[-10px] w-[165px]">
         <SelectGroup>
           <SelectLabel>{label}</SelectLabel>
           {options.map((option) => (

@@ -5,9 +5,12 @@ import PropertyTypeFilter from "@/components/filter/PropertyTypeFilter";
 import { getPropertyOptions } from "@/constants/options/propertyOptions";
 import { IFilter } from "@/interfaces/filter/types";
 import { useIntl } from "react-intl";
-import clsx from "clsx";
 import ControlledInput from "@components/inputs/controlledInputs/ControlledInput";
-import { InputType, PriceRangeOption, PropertyTypeOption } from "@/interfaces/inputs/types";
+import {
+  InputType,
+  PriceRangeOption,
+  PropertyTypeOption,
+} from "@/interfaces/inputs/types";
 import { LocationData } from "@/interfaces/data/location";
 import useFilterForm from "@/hooks/froms/filter/useFilterForm";
 import FilterInputItem from "@components/filter/FilterInputItem";
@@ -22,17 +25,25 @@ const Filter = (props: IFilter) => {
   const { containerStyle } = props;
   const intl = useIntl();
 
-  const { handleSubmit, methods, onSubmit, control, setValue, watch, errors , onError} =
-    useFilterForm();
-  const [query, setQuery] = useState<string>('');
-  const {data,isLoading} = useLocationSearch(query, 300);
+  const {
+    handleSubmit,
+    methods,
+    onSubmit,
+    control,
+    setValue,
+    watch,
+    errors,
+    onError,
+  } = useFilterForm();
+  const [query, setQuery] = useState<string>("");
+  const { data, isLoading } = useLocationSearch(query, 300);
   const propertyOptions = getPropertyOptions(intl.formatMessage);
-  const defaultContainerStyle = "w-full mt-[20px]";
+  const defaultContainerStyle = "w-full ";
 
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit, onError)}>
-        <div className={clsx(defaultContainerStyle, { containerStyle })}>
+        <div className={`${defaultContainerStyle} ${containerStyle}`}>
           <PropertyTypeFilter
             options={propertyOptions}
             selectedOption={watch("propertyActionType")}
@@ -41,11 +52,15 @@ const Filter = (props: IFilter) => {
             }
           />
 
-          <div className="w-full mt-[8px] text-black">
-            <div className="w-full h-[85px] bg-light-0 rounded-[8px] p-[10px] flex items-center gap-[5px] px-[10px]">
+          <div className="w-full mt-[8px] text-black ">
+            <div className="md:w-full md:h-[85px] bg-light-15  md:bg-light-0 rounded-[8px] p-[10px] flex items-center gap-[5px] px-[10px]  . flex-col h-fit mx-[15px] md:mx-0 md:flex-row">
               <FilterInputItem
-                label={intl.formatMessage({ id : 'filter.input.location.label'})}
-                errorClassName={cn({'border-error-20 bg-error-10': errors.location})}
+                label={intl.formatMessage({
+                  id: "filter.input.location.label",
+                })}
+                errorClassName={cn({
+                  "border-error-20 bg-error-10": errors.location,
+                })}
                 children={
                   <ControlledInput
                     name="location"
@@ -59,19 +74,24 @@ const Filter = (props: IFilter) => {
                       label: intl.formatMessage({
                         id: "Select.location.search.placeholder",
                       }),
-                      searchPlaceholder: intl.formatMessage({ id :  'Select.search'}),
-                      buttonClassName: cn({"text-error-20" : errors.location}),
-                      onSearch : (v: string) => setQuery(v),
-                      isDataLoading : isLoading
-                    }
-                    }
+                      searchPlaceholder: intl.formatMessage({
+                        id: "Select.search",
+                      }),
+                      buttonClassName: cn({ "text-error-20": errors.location }),
+                      onSearch: (v: string) => setQuery(v),
+                      isDataLoading: isLoading,
+                    }}
                   />
                 }
               />
 
               <FilterInputItem
-                label={intl.formatMessage({ id : 'filter.input.propertyType.label'})}
-                errorClassName={cn({'border-error-20 bg-error-10': errors.propertyType})}
+                label={intl.formatMessage({
+                  id: "filter.input.propertyType.label",
+                })}
+                errorClassName={cn({
+                  "border-error-20 bg-error-10": errors.propertyType,
+                })}
                 children={
                   <ControlledInput
                     name="propertyType"
@@ -83,16 +103,24 @@ const Filter = (props: IFilter) => {
                       getLabel: (option) => option.label,
                       getValue: (option) => option.value,
                       getOptionKey: (option) => option.label,
-                      label: intl.formatMessage({id : 'filter.input.propertyType.dropdown.label'}),
-                      selectClassName : cn({"text-error-20" : errors.propertyType})
+                      label: intl.formatMessage({
+                        id: "filter.input.propertyType.dropdown.label",
+                      }),
+                      selectClassName: cn({
+                        "text-error-20": errors.propertyType,
+                      }),
                     }}
                   />
                 }
               />
 
               <FilterInputItem
-                label= {intl.formatMessage({ id : 'filter.input.priceRange.label'})}
-                errorClassName={cn({'border-error-20 bg-error-10': errors.priceRange})}
+                label={intl.formatMessage({
+                  id: "filter.input.priceRange.label",
+                })}
+                errorClassName={cn({
+                  "border-error-20 bg-error-10": errors.priceRange,
+                })}
                 children={
                   <ControlledInput
                     name="priceRange"
@@ -104,18 +132,32 @@ const Filter = (props: IFilter) => {
                       getLabel: (option) => option.label,
                       getValue: (option) => option?.value,
                       getOptionKey: (option) => option.label,
-                      label: intl.formatMessage({id : 'filter.input.priceRange.dropdown.label'}),
-                      selectClassName : cn({"text-error-20" : errors.priceRange})
+                      label: intl.formatMessage({
+                        id: "filter.input.priceRange.dropdown.label",
+                      }),
+                      selectClassName: cn({
+                        "text-error-20": errors.priceRange,
+                      }),
                     }}
                   />
                 }
               />
-              <div className="px-[10px] h-[60%] rounded-lg bg-light-30 flex items-center justify-center">
+              <div className="px-[10px] h-[60%] rounded-lg bg-light-30 md:flex items-center justify-center . hidden ">
                 <RiSearchLine
                   className="cursor-pointer"
                   onClick={handleSubmit(onSubmit, onError)}
                 />
               </div>
+            </div>
+
+            <div className="md:hidden w-full h-[40px] flex items-center justify-center m-[2%]">
+              <button
+                className="w-full h-full bg-light-60  mx-[25px] rounded-sm text-light-0"
+                type="button"
+                onClick={handleSubmit(onSubmit, onError)}
+              >
+                {intl.formatMessage({ id: "Select.search" })}
+              </button>
             </div>
           </div>
         </div>
