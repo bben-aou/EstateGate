@@ -9,6 +9,7 @@ export default {
           0: "#FFFFFF",
           5: "#FCFCFD",
           10: "#fcfcfe",
+          15:"#f8f8ff",
           20: "#fbfbfd",
           30: "#EEEEEF",
           40: "#64656A",
