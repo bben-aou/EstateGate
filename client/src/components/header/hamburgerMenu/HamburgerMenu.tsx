@@ -26,7 +26,7 @@ const HamburgerMenu = () => {
     );
   });
   return (
-    <div className="md:hidden absolute flex flex-col h-full w-[75%] ml-[25%] bg-light-20 shadow-[-10px_0_10px_-5px_rgba(0,0,0,0.1)]">
+    <div className="md:hidden absolute flex flex-col h-full w-[75%] ml-[25%] bg-light-20 shadow-[-10px_0_10px_-5px_rgba(0,0,0,0.1)] z-[100]">
       <div className="w-full h-[10vh] flex items-center justify-end px-[25px]">
         <CgClose className="md:hidden w-[22px] h-[22px] text-light-60" onClick={()=> {setIsHamburgerMenuOpen(false)}}/>
       </div>

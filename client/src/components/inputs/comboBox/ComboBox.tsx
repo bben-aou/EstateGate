@@ -46,7 +46,6 @@ const ComboBox = <T,>({
   const [open, setOpen] = React.useState(false);
   const [selectedOption, setSelectedOption] = React.useState<T | null>(null);
   const intl = useIntl();
-
   const handleSelect = (option: T | null) => {
     setSelectedOption(option);
     setOpen(false);
@@ -61,13 +60,13 @@ const ComboBox = <T,>({
           variant="default"
           role="combobox"
           aria-expanded={open}
-          className={`w-full justify-between pl-0 border-none shadow-none bg-transparent hover:bg-transparent font-normal text-black truncate ${buttonClassName}`}
+          className={`w-full relative justify-between pl-0 border-none shadow-none bg-transparent hover:bg-transparent font-normal text-black truncate ${buttonClassName}`}
         >
           {selectedOption ? getOptionLabel(selectedOption) : label}
-          <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
+          <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50 " />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className={`w-[165px] p-0 ${selectClassName}`}>
+      <PopoverContent className={`absolute md:relative right-0 mr-[15px] md:mr-0 w-[165px] px-0 ${selectClassName}`}>
         <Command>
           <CommandInput
             placeholder={
@@ -85,11 +84,11 @@ const ComboBox = <T,>({
               </div>
             </CommandEmpty>
             <CommandGroup>
-              {options?.map((option) => {
+              {options?.map((option, index) => {
                 const label = getOptionLabel(option);
                 return (
                   <CommandItem
-                    key={label}
+                    key={index}
                     value={label}
                     onSelect={() => handleSelect(option)}
                   >

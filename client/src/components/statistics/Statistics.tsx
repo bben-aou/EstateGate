@@ -1,6 +1,6 @@
 import StatisticItem from './StatisticItem';
 import { useIntl } from 'react-intl';
-import statisticsData from 'src/YummyData/statisticsData';
+import statisticsData from '@/DummyData/statisticsData';
 import { IStaticItems } from '@interfaces/components/statistics/types';
 
 const Statistics = () => {
@@ -20,7 +20,7 @@ const Statistics = () => {
         )
     })
   return (
-    <div className=" flex flex-col justify-center gap-[20px]">
+    <div className="hidden md:flex flex-col justify-center gap-[20px]">
         <h1 className="font-extrabold text-[35px] self-center text-dark-10 tracking-[.3px]">
           {intl.formatMessage({ id: "home.statistics.section.title" })}
         </h1>
