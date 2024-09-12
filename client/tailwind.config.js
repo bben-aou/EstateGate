@@ -31,6 +31,9 @@ export default {
         random: {
           10: "#454655",
           20: "#ff00d3",
+          30: "#8c8db9",
+          40 : "#D4D7E3",
+          50: "#F7FBFF",
         },
         banner: {
           10: "#d8dcdf24",
