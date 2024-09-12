@@ -25,5 +25,23 @@
     "filter.input.location.validation.required.message.error" : "Please select a valid location.",
     "filter.select.propertyAction.validation.required.message.error" : "Please select an action (Sell, Buy, or Rent).",
     "filter.input.propertyType.validation.required.message.error" : "Please select a property type",
-    "filter.toast.form.error.header": "Filter Form Error :"
+    "filter.toast.form.error.header": "Filter Form Error :",
+    "login.greeting" : "Welcome Back 👋",
+    "login.prompt" : "Today is a new beginning. It's your time to explore, create, and take control. Sign in to start managing your real estate journey",
+    "login.forget.password": "Forgot Password?",
+    "login.button.sign-in" : "Sign in",
+    "login.splitter.or" : "Or",
+    "login.button.sign-in.with.google" : "Sign in with Google",
+    "login.button.sign-in.with.apple" : "Sign in with Apple",
+    "login.sign-up.prompt" : "Don't you have an account? Sign up",
+    "login.email.validation.required.message.error" : "Please Enter Your Email",
+    "login.email.validation.invalid.email.message.error" : "Please enter a valid email address",
+    "login.password.validation.required.message.error" : "Please Enter Your Password",
+    "login.password.validation.short.message.error" : "Password is too short",
+    "login.password.validation.invalidFormat.message.error" : "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+    "login.input.email.label" : "Email",
+    "login.input.password.label": "Password",
+    "login.sign-up.headline" : "Sign Up and Explore",
+    "login.sign-up.description.prompt" : "Register now to stay ahead of the market and get instant access to the latest property listings, exclusive deals, and expert insights."
+
 }
