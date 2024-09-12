@@ -1,5 +1,14 @@
-import { Control, FieldValues, RegisterOptions } from "react-hook-form";
-import { Path } from "react-hook-form";
+import { ISignInType } from "@/validators/login/sign-in/validators";
+import {
+  Control,
+  FieldErrors,
+  FieldValues,
+  RegisterOptions,
+  Path,
+  SubmitHandler,
+  SubmitErrorHandler,
+} from "react-hook-form";
+import { IntlShape } from "react-intl";
 
 export enum InputType {
   TEXT = "text",
@@ -60,4 +69,45 @@ export type PriceRangeValue = {
 export type PriceRangeOption = {
   label: string;
   value: PriceRangeValue;
+};
+
+export interface IInput {
+  control: Control<ISignInType>;
+  errors: FieldErrors<ISignInType>;
+  intl: IntlShape;
+}
+
+export interface TEmailInput extends IInput {}
+export interface TPasswordInput extends IInput {}
+
+export type TForgotPassword = {
+  label: string;
+  onClickHandler: () => void;
+  containerClassName?: string;
+};
+
+export type TSignInButton = {
+  label: string;
+  containerClassName?: string;
+};
+
+export type TDiver = {
+  label: string;
+};
+
+export type THandleSubmit = (
+  onValid: SubmitHandler<ISignInType>,
+  onInvalid?: SubmitErrorHandler<ISignInType>
+) => (e?: React.BaseSyntheticEvent) => Promise<void>;
+
+export type TSubmitHandler = SubmitHandler<ISignInType>
+
+export interface TSingInForm extends IInput {
+  handleSubmit:THandleSubmit;
+  onSubmit: TSubmitHandler
+}
+
+export type TSignUpPrompt = {
+  label: string;
+  onClickHandler: () => void;
 };

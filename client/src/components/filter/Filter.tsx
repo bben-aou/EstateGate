@@ -13,7 +13,7 @@ import {
 } from "@/interfaces/inputs/types";
 import { LocationData } from "@/interfaces/data/location";
 import useFilterForm from "@/hooks/froms/filter/useFilterForm";
-import FilterInputItem from "@components/filter/FilterInputItem";
+import InputWithLabel from "@/components/common/InputWithLabel";
 import Select from "@components/inputs/select/Select";
 import { propertyTypeOptions } from "@/constants/inputs/select/propertyTypes";
 import { priceRangeOptions } from "@/constants/inputs/select/priceRange";
@@ -54,7 +54,7 @@ const Filter = (props: IFilter) => {
 
           <div className="w-full mt-[8px] text-black ">
             <div className="md:w-full md:h-[85px] bg-light-15  md:bg-light-0 rounded-[8px] p-[10px] flex items-center gap-[5px] px-[10px]  . flex-col h-fit mx-[15px] md:mx-0 md:flex-row">
-              <FilterInputItem
+              <InputWithLabel
                 label={intl.formatMessage({
                   id: "filter.input.location.label",
                 })}
@@ -85,7 +85,7 @@ const Filter = (props: IFilter) => {
                 }
               />
 
-              <FilterInputItem
+              <InputWithLabel
                 label={intl.formatMessage({
                   id: "filter.input.propertyType.label",
                 })}
@@ -114,7 +114,7 @@ const Filter = (props: IFilter) => {
                 }
               />
 
-              <FilterInputItem
+              <InputWithLabel
                 label={intl.formatMessage({
                   id: "filter.input.priceRange.label",
                 })}
