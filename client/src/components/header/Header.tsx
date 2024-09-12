@@ -56,11 +56,11 @@ const Header = () => {
         <div className="hidden md:flex h-full  items-center md:gap-[5px] lg:gap-[20px]">
           <LoginButton
             label={intl.formatMessage({ id: "authenticationLogin" })}
-            redirectionPath={"/login"}
+            redirectionPath={"/login/sign-in"}
           />
           <SignUpButton
             label={intl.formatMessage({ id: "authenticationSignUp" })}
-            redirectionPath={"/sign-up"}
+            redirectionPath={"/login/sign-up"}
           />
         </div>
       </header>
