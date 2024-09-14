@@ -2,19 +2,22 @@ import InputWithLabel from "@/components/common/InputWithLabel";
 import React from "react";
 import ControlledInput from "@/components/inputs/controlledInputs/ControlledInput";
 import { Input } from "@/components/ui/input";
-import { InputType, TPasswordInput } from "@/interfaces/inputs/types";
+import { InputType, IPasswordInput } from "@/interfaces/inputs/types";
 import { cn } from "@/lib/utils";
+import { FieldError, FieldValues } from "react-hook-form";
 
-export default function PasswordInput(props: Readonly<TPasswordInput>) {
-    const { control, errors, intl } = props;
+const PasswordInput = <T extends FieldValues>(
+  props: Readonly<IPasswordInput<T>>
+) => {
+  const { control, errors, intl, name } = props;
   return (
     <InputWithLabel
       label={intl.formatMessage({ id: "login.input.password.label" })}
       containerClassName="border-none my-[5px]"
-      errorMessage={errors.password?.message}
+      errorMessage={(errors.password as FieldError)?.message}
       children={
         <ControlledInput
-          name="password"
+          name={name}
           control={control}
           component={Input}
           inputType={InputType.PASSWORD}
@@ -27,9 +30,11 @@ export default function PasswordInput(props: Readonly<TPasswordInput>) {
                 ["border-error-20 focus-visible:ring-0"]: errors.password,
               }
             ),
+            id: "password"
           }}
         />
       }
     />
   );
-}
+};
+export default PasswordInput;

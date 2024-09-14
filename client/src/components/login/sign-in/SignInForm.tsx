@@ -7,10 +7,10 @@ import { TSingInForm } from "@/interfaces/inputs/types";
 const SignInForm = (props: TSingInForm) => {
   const { control, errors, intl, handleSubmit, onSubmit } = props;
   return (
-    <div className=" flex flex-col gap-[15px] py-[20px]">
+    <div className=" flex flex-col gap-[15px] py-[10px] md:py-[20px]">
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
-        <EmailInput control={control} errors={errors} intl={intl} />
-        <PasswordInput control={control} errors={errors} intl={intl} />
+        <EmailInput control={control} errors={errors} intl={intl} name="email" />
+        <PasswordInput control={control} errors={errors} intl={intl} name="password"/>
         <ForgotPassword
           label={intl.formatMessage({ id: "login.forget.password" })}
           onClickHandler={() => {}}

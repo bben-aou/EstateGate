@@ -7,7 +7,7 @@ const SignInButton = (props: TSignInButton) => {
   return (
     <button
       className={cn(
-        "w-full h-[48px] bg-light-60 rounded-[12px] text-light-0",
+        "w-full h-[42px] md:h-[48px] bg-light-60 rounded-[12px] text-light-0",
         containerClassName
       )}
       type="submit"

@@ -6,7 +6,7 @@ const ForgotPassword = (props: Readonly<TForgotPassword>) => {
   const { label, onClickHandler, containerClassName } = props;
   return (
     <button
-      className={cn("self-end font-light mb-[20px]", containerClassName)}
+      className={cn("self-end font-light text-[13px] md:text-sm mb-[20px]", containerClassName)}
       onClick={onClickHandler}
       type="button"
     >
