@@ -46,7 +46,7 @@ const Header = () => {
             {intl.formatMessage({ id: "logoTitle" })}
           </Link>
           <div className="h-full flex items-center">
-            <img src="EstateGateLogo.svg" alt="logo" className="w-[40px] hidden md:flex lg:hidden"/>
+            <img src="/EstateGateLogo.svg" alt="logo" className="w-[40px] hidden md:flex lg:hidden"/>
           </div>
           <OpenMenuIcon className=" md:hidden w-[22px] h-[22px] text-light-60" onClick={() => setIsHamburgerMenuOpen(true)}/>
           <ul className="hidden md:flex items-center lg:gap-[30px]">
