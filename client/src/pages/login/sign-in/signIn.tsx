@@ -12,10 +12,15 @@ const SignIn = () => {
   const { control, errors, handleSubmit, onSubmit } = useSignInForm();
   console.log(errors);
   return (
-    <div className=" md:mx-[10%] mt-[8vh] h-[92vh]  flex flex-row-reverse">
-      <LoginImage imgSrc="/login.jpg" imgAlt="Login" />
-      <div className="w-[50%] h-full flex items-center justify-center">
-        <div className="h-[690px]  w-[388px] flex flex-col">
+    <div className="mx-[10%] mt-[8vh] h-[92vh]  flex flex-row-reverse">
+      <LoginImage
+        imgSrc="/login.jpg"
+        imgAlt="Login"
+        imgClassName="brightness-75"
+        wrapperClassName="hidden lg:block"
+      />
+      <div className="w-full lg:w-[50%] h-full flex items-center justify-center ">
+        <div className="h-full lg:h-[690px]  justify-center lg:justify-start  w-[388px] flex flex-col">
           <SingInHeader
             greetingMessage={intl.formatMessage({ id: "login.greeting" })}
             promptMessage={intl.formatMessage({ id: "login.prompt" })}
