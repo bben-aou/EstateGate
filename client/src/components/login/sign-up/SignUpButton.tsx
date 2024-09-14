@@ -1,13 +1,12 @@
-import { TSignInButton } from "@/interfaces/inputs/types";
+import { TSignUpButton } from "@/interfaces/inputs/types";
 import { cn } from "@/lib/utils";
 
-
-const SignInButton = (props: TSignInButton) => {
+const SignUpButton = (props: TSignUpButton) => {
   const { label, containerClassName } = props;
   return (
     <button
       className={cn(
-        "w-full h-[42px] md:h-[48px] bg-light-60 rounded-[12px] text-light-0",
+        "w-full h-[48px] bg-light-60 rounded-[12px] text-light-0 mt-[20px]",
         containerClassName
       )}
       type="submit"
@@ -16,4 +15,4 @@ const SignInButton = (props: TSignInButton) => {
     </button>
   );
 };
-export default SignInButton;
+export default SignUpButton;

@@ -1,26 +1,38 @@
+
 import LoginImage from "@/components/login/sign-in/LoginImage";
+import SignUpForm from "@/components/login/sign-up/SignUpForm";
 import SignUpHeader from "@/components/login/sign-up/SignUpHeader";
+import { useSignUpForm } from "@/hooks/froms/login/sign-up/useSignUpForm";
 import { useIntl } from "react-intl";
 
 export default function SignUp() {
   const intl = useIntl();
+  const { control, errors, handleSubmit, onSubmit } = useSignUpForm();
+  console.log(errors);
   return (
-    <div className=" md:mx-[10%] mt-[8vh] h-[92vh] flex flex-row-reverse ">
+    <div className="mx-[10%] mt-[8vh] h-[92vh] flex flex-row-reverse ">
       <LoginImage
         imgSrc="/sign-up.jpg"
         imgAlt="Login"
-        imgClassName={"brightness-75"}
+        imgClassName="brightness-75"
+        wrapperClassName="hidden lg:block"
       />
-      <div className="w-[50%] h-full flex items-center justify-center ">
-        <div className="h-[690px] w-[388px] flex flex-col ">
-
+      <div className="w-full lg:w-[50%] h-full flex items-center justify-center">
+        <div className="h-fit w-[388px] flex flex-col max-h-full mt-[15px] md:mt-0">
           <SignUpHeader
-            headline={intl.formatMessage({ id : 'login.sign-up.headline' })}
-            descriptionPrompt={intl.formatMessage({ id : 'login.sign-up.description.prompt' })}
+            headline={intl.formatMessage({ id: "login.sign-up.headline" })}
+            descriptionPrompt={intl.formatMessage({
+              id: "login.sign-up.description.prompt",
+            })}
           />
-          <div className=" flex flex-col gap-[15px] py-[20px]">
 
-          </div>
+          <SignUpForm
+             intl={intl}
+             control={control}
+             errors={errors}
+             handleSubmit={handleSubmit}
+             onSubmit={onSubmit}
+          />
         </div>
       </div>
     </div>

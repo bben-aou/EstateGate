@@ -31,7 +31,7 @@ const HamburgerMenu = () => {
         <CgClose className="md:hidden w-[22px] h-[22px] text-light-60" onClick={()=> {setIsHamburgerMenuOpen(false)}}/>
       </div>
       <div className=" w-full flex items-center justify-center py-[20px] text-[21px] mx-auto ">
-        <img src="EstateGateLogo.svg" alt="logo" />
+        <img src="/EstateGateLogo.svg" alt="logo" />
         <h1 className="pl-[4px] font-normal tracking-[0.02rem]">
           <span className="text-light-60">E</span>state
           <span className="text-light-60">G</span>ate
@@ -41,7 +41,7 @@ const HamburgerMenu = () => {
         <nav>{navigationItems}</nav>
         <div className="w-full flex flex-col items-center gap-[8px] ">
           <NavLink
-            to={"/login"}
+            to={"/login/sign-in"}
             onClick={handleCloseHamburgerMenuOnNavigation}
             className={({ isActive }) =>
               `w-[160px] flex items-center justify-center rounded-full h-[45px]  ${
@@ -54,7 +54,7 @@ const HamburgerMenu = () => {
             {intl.formatMessage({ id : 'authenticationLogin' })}
           </NavLink>
           <NavLink
-            to={"/sign-up"}
+            to={"/login/sign-up"}
             onClick={handleCloseHamburgerMenuOnNavigation}
             className={({ isActive }) =>
               `w-[160px] flex items-center justify-center rounded-full h-[45px]  ${

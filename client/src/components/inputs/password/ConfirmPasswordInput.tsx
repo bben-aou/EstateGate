@@ -6,7 +6,7 @@ import { InputType, IPasswordInput } from "@/interfaces/inputs/types";
 import { cn } from "@/lib/utils";
 import { FieldError, FieldValues } from "react-hook-form";
 
-const PasswordInput = <T extends FieldValues>(
+const ConfirmPasswordInput = <T extends FieldValues>(
   props: Readonly<IPasswordInput<T>>
 ) => {
   const { control, errors, intl, name } = props;
@@ -14,7 +14,7 @@ const PasswordInput = <T extends FieldValues>(
     <InputWithLabel
       label={intl.formatMessage({ id: "login.input.password.label" })}
       containerClassName="border-none my-[5px]"
-      errorMessage={(errors.password as FieldError)?.message}
+      errorMessage={(errors.confirmPassword as FieldError)?.message}
       children={
         <ControlledInput
           name={name}
@@ -27,14 +27,15 @@ const PasswordInput = <T extends FieldValues>(
             className: cn(
               "w-full shadow-none h-[50px] rounded-[12px] my-[10px] border-random-40 bg-random-50",
               {
-                ["border-error-20 focus-visible:ring-0"]: errors.password,
+                ["border-error-20 focus-visible:ring-0"]: errors.confirmPassword,
               }
             ),
-            id: "password"
+            id: "confirmPassword"
+
           }}
         />
       }
     />
   );
 };
-export default PasswordInput;
+export default ConfirmPasswordInput;
