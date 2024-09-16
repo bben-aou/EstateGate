@@ -95,6 +95,7 @@ export interface IPasswordInput<T extends FieldValues> {
   errors: FieldErrors<T>;
   name: Path<T>;
   intl: IntlShape;
+  label? : string;
 }
 
 // export interface TEmailInput extends ISignInInput  {}

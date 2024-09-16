@@ -3,12 +3,13 @@ import { hashPassword } from "@utils/hashPassword";
 import prisma from "@lib/prisma";
 import bcrypt from "bcrypt";
 import jwt, { Secret } from "jsonwebtoken";
+import { generateAccessToken } from "@utils/generateAccessToken";
+import { generateRefreshToken } from "@utils/generateRefreshToken";
 
 export const register = async (req: Request, res: Response) => {
   console.log("register endpoint", req.body);
-  const { username, email, password } = req.body;
-
-  if (!username || !email || !password) {
+  const { firstName, lastName, phoneNumber, email, password } = req.body;
+  if (!firstName || !lastName || !phoneNumber || !email || !password) {
     return res.status(400).json({ message: "Missing required fields" });
   }
 
@@ -19,12 +20,45 @@ export const register = async (req: Request, res: Response) => {
     // Create a new user in the database
     const newUser = await prisma.user.create({
       data: {
-        username,
-        email,
+        firstName: firstName,
+        lastName: lastName,
+        phoneNumber: phoneNumber,
+        email: email,
         password: hashedPassword,
       },
     });
-    res.status(201).json(newUser);
+
+    // Generate a Refresh Token
+
+    const refreshToken = generateRefreshToken(newUser.id);
+    const accessToken = generateAccessToken(newUser.id);
+
+    if (!refreshToken) {
+      throw new Error("JWT_ACCESS_TOKEN is not defined");
+    }
+    if (!refreshToken) {
+      throw new Error("JWT_REFRESH_TOKEN is not defined");
+    }
+
+    // set Refresh Token in http-only cookie
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    // send access token and user information in response
+
+    res.status(201).json({
+      accessToken,
+      user: {
+        id: newUser.id,
+        email: newUser.email,
+        firstName: newUser.firstName,
+        lastName: newUser.lastName,
+        phoneNumber: newUser.phoneNumber,
+        avatar: newUser.avatar,
+      },
+    });
   } catch (error) {
     console.log("Error creating user:", error);
     res.status(500).json({ message: "Internal server error" });
@@ -33,14 +67,14 @@ export const register = async (req: Request, res: Response) => {
 
 export const login = async (req: Request, res: Response) => {
   console.log("login endpoint");
-  const { username, password } = req.body;
-  if (!username || !password) {
+  const { email, password } = req.body;
+  if (!email || !password) {
     return res.status(400).json({ message: "Missing required fields" });
   }
   try {
     // Checking if the user already exists
     const user = await prisma.user.findUnique({
-      where: { username: username },
+      where: { email: email },
     });
     if (!user) {
       return res.status(401).json({ message: "Invalid Credentials" });
@@ -52,40 +86,95 @@ export const login = async (req: Request, res: Response) => {
       return res.status(401).json({ message: "Invalid Credentials" });
     }
 
-    // Generate JWT token
-    const secretKey = process.env.JWT_SECRET_KEY;
-    const tokenValidityPeriod = 1000 * 24 * 60 * 60 * 7;
-
-    if (!secretKey) {
-      throw new Error("JWT_SECRET_KEY is not defined");
+    // --------- New token handling logic ---------
+    const accessToken = generateAccessToken(user.id);
+    const refreshToken = generateRefreshToken(user.id);
+    if (!accessToken) {
+      throw new Error("JWT_ACCESS_TOKEN is not defined");
     }
-
-    const token = jwt.sign({ id: user.id }, secretKey, {
-      expiresIn: tokenValidityPeriod,
+    if (!refreshToken) {
+      throw new Error("JWT_REFRESH_TOKEN is not defined");
+    }
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
-
-    // Set JWT cookie to the response
-    res
-      .cookie("token", token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        maxAge: tokenValidityPeriod,
-      })
-      .status(200)
-      .json({ message: "Login successful" });
+    // Send Access Token in response body
+    res.status(200).json({
+      accessToken,
+      user: { id: user.id, email: user.email },
+    });
   } catch (error) {
-    console.log("Error creating user:", error);
+    console.error("Login Error :", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
 
 export const logout = (req: Request, res: Response) => {
   console.log("logout endpoint");
-  try{
-      res.clearCookie("token").status(200).json({ message: "Logout successful" });
+  try {
+    res.clearCookie("token").status(200).json({ message: "Logout successful" });
+  } catch (error) {
+    console.error("Error creating user:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
-  catch(error){
-    console.log("Error creating user:", error);
+};
+
+export const me = async (req: Request, res: Response) => {
+  console.log("Me endpoint");
+
+  const authHeader = req.headers["authorization"];
+  const accessToken = authHeader?.split(" ")[1];
+
+  if (!accessToken) {
+    return res.status(401).json({ message: "Access Token Required!" });
+  }
+
+  try {
+    const payload = jwt.verify(accessToken, process.env.JWT_ACCESS_SECRET!) as {
+      id: string;
+    };
+    const user = await prisma.user.findUnique({ where: { id: payload.id } });
+
+    if (!user) {
+      return res.status(401).json({ message: "Invalid Access Token!" });
+    }
+
+    res.status(200).json({
+      user: { id: user.id, email: user.email, avatar: user.avatar },
+    });
+  } catch (error) {
+    console.error("Me Endpoint error:", error);
+
+    if (error instanceof jwt.TokenExpiredError) {
+      return res.status(401).json({ message: "Access Token Expired" });
+    } else if (error instanceof jwt.JsonWebTokenError) {
+      return res.status(401).json({ message: "Invalid Access Token" });
+    }
+
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const refreshToken = async (req: Request, res: Response) => {
+  const refreshToken = req.cookies.refreshToken;
+  if (!refreshToken) {
+    return res.status(401).json({ message: "Refresh Token is required !" });
+  }
+  try {
+    const payload = jwt.verify(
+      refreshToken,
+      process.env.JWT_REFRESH_SECRET!
+    ) as { id: string };
+    const user = await prisma.user.findUnique({ where: { id: payload.id } });
+    if (!user) {
+      return res.status(401).json({ message: "Invalid Refresh Token  !" });
+    }
+    const newAccessToken = generateAccessToken(user.id);
+    res.status(200).json({ accessToken: newAccessToken });
+  } catch (error) {
+    console.error("Refresh Token Error : ", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
