@@ -37,6 +37,9 @@ const SignUpForm = (props: TSingUpForm) => {
           errors={errors}
           intl={intl}
           name="confirmPassword"
+          label={intl.formatMessage({
+            id: "login.sign-up.input.confirm.password.label",
+          })}
         />
 
         <CheckBox

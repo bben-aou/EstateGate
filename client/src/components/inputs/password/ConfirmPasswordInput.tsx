@@ -9,10 +9,10 @@ import { FieldError, FieldValues } from "react-hook-form";
 const ConfirmPasswordInput = <T extends FieldValues>(
   props: Readonly<IPasswordInput<T>>
 ) => {
-  const { control, errors, intl, name } = props;
+  const { control, errors, intl, name, label } = props;
   return (
     <InputWithLabel
-      label={intl.formatMessage({ id: "login.input.password.label" })}
+      label={label ?? intl.formatMessage({ id: "login.input.password.label" })}
       containerClassName="border-none my-[5px]"
       errorMessage={(errors.confirmPassword as FieldError)?.message}
       children={
