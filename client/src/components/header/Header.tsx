@@ -9,11 +9,14 @@ import HamburgerMenu from "@components/header/hamburgerMenu/HamburgerMenu";
 import { TNavItems } from "@interfaces/index";
 import { useHeaderContext } from "@global/states/hooks/useHeaderContext";
 import ConditionalRendering from "@components/common/ConditionalRendering";
-
+import { useAuth } from "@/providers/AuthProvider";
+import ProfileDropDownMenu from "@/components/header/profileDropDownMenu/ProfileDropDownMenu";
 
 const Header = () => {
   const intl = useIntl();
-  const {isHamburgerMenuOpen, setIsHamburgerMenuOpen} = useHeaderContext();
+  const { isHamburgerMenuOpen, setIsHamburgerMenuOpen } = useHeaderContext();
+  const { user, isLoading } = useAuth();
+
   const navigationItems = navItems.map((navItem: TNavItems) => {
     return (
       <li key={navItem.id}>
@@ -46,26 +49,38 @@ const Header = () => {
             {intl.formatMessage({ id: "logoTitle" })}
           </Link>
           <div className="h-full flex items-center">
-            <img src="/EstateGateLogo.svg" alt="logo" className="w-[40px] hidden md:flex lg:hidden"/>
+            <img
+              src="/EstateGateLogo.svg"
+              alt="logo"
+              className="w-[40px] hidden md:flex lg:hidden"
+            />
           </div>
-          <OpenMenuIcon className=" md:hidden w-[22px] h-[22px] text-light-60" onClick={() => setIsHamburgerMenuOpen(true)}/>
+          <OpenMenuIcon
+            className=" md:hidden w-[22px] h-[22px] text-light-60"
+            onClick={() => setIsHamburgerMenuOpen(true)}
+          />
           <ul className="hidden md:flex items-center lg:gap-[30px]">
             {navigationItems}
           </ul>
         </nav>
-        <div className="hidden md:flex h-full  items-center md:gap-[5px] lg:gap-[20px]">
-          <LoginButton
-            label={intl.formatMessage({ id: "authenticationLogin" })}
-            redirectionPath={"/login/sign-in"}
-          />
-          <SignUpButton
-            label={intl.formatMessage({ id: "authenticationSignUp" })}
-            redirectionPath={"/login/sign-up"}
-          />
-        </div>
+        <ConditionalRendering
+          condition={!user && !isLoading}
+          defaultComponent={<ProfileDropDownMenu  />}
+        >
+          <div className="hidden md:flex h-full  items-center md:gap-[5px] lg:gap-[20px]">
+            <LoginButton
+              label={intl.formatMessage({ id: "authenticationLogin" })}
+              redirectionPath={"/login/sign-in"}
+            />
+            <SignUpButton
+              label={intl.formatMessage({ id: "authenticationSignUp" })}
+              redirectionPath={"/login/sign-up"}
+            />
+          </div>
+        </ConditionalRendering>
       </header>
       <ConditionalRendering condition={isHamburgerMenuOpen}>
-        <HamburgerMenu/>
+        <HamburgerMenu />
       </ConditionalRendering>
     </Fragment>
   );
