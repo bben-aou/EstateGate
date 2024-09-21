@@ -59,7 +59,9 @@
     "login.sign-up.input.phoneNumber.label" : "Phone Number",
     "login.sign-up.input.email.label" : "Email ",
     "login.sign-up.input.password.label" : "Password",
-    "login.sign-up.input.confirm.password.label" : "Confirm Password"
+    "login.sign-up.input.confirm.password.label" : "Confirm Password",
+    "login.signUpForm.isLoading.label" : "loading ..."
+
 
 
 
