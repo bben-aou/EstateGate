@@ -82,6 +82,7 @@ export interface ISignUpInput {
   control: Control<ISignUpType>;
   errors: FieldErrors<ISignUpType>;
   intl: IntlShape;
+  isLoading?: boolean
 }
 
 export interface IEmailInput<T extends FieldValues> {
