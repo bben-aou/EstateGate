@@ -7,6 +7,7 @@ import { FieldValues } from "react-hook-form";
 
 const EmailInput = <T extends FieldValues>(props: Readonly<IEmailInput<T>>) => {
   const { control, errors, intl, name } = props;
+
   return (
     <InputWithLabel
       label={intl.formatMessage({ id: "login.input.email.label" })}
@@ -24,7 +25,7 @@ const EmailInput = <T extends FieldValues>(props: Readonly<IEmailInput<T>>) => {
             className: cn(
               "w-full shadow-none h-[50px] rounded-[12px] my-[10px] border-random-40 bg-random-50",
               {
-                ["border-error-20 focus-visible:ring-0"]: errors.email,
+                ["border-error-20 focus-visible:ring-0 shake-horizontal"]: errors.email,
               }
             ),
             id : "email"

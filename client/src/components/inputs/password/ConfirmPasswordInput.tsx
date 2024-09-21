@@ -27,7 +27,7 @@ const ConfirmPasswordInput = <T extends FieldValues>(
             className: cn(
               "w-full shadow-none h-[50px] rounded-[12px] my-[10px] border-random-40 bg-random-50",
               {
-                ["border-error-20 focus-visible:ring-0"]: errors.confirmPassword,
+                ["border-error-20 focus-visible:ring-0 shake-horizontal"]: errors.confirmPassword,
               }
             ),
             id: "confirmPassword"
