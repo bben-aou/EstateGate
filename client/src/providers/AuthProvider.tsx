@@ -20,6 +20,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const refreshAccessToken = async () => {
     if (isRefreshing) return null;
@@ -35,22 +36,34 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setIsRefreshing(false);
       localStorage.removeItem("accessToken");
       api.defaults.headers.common["Authorization"] = "";
+      setErrors({ refresh: "Failed to refresh token" });
       return null;
     }
   };
+
   api.interceptors.response.use(
     (response) => response,
     async (error) => {
       const originalRequest = error.config;
+
+      // Avoid retrying login or register requests
+      if (
+        originalRequest.url === "/auth/login" ||
+        originalRequest.url === "/auth/register"
+      ) {
+        return Promise.reject(error); // No retry for these requests
+      }
+
       if (error.response?.status === 401 && !originalRequest._retry) {
         originalRequest._retry = true;
         const accessToken = await refreshAccessToken();
         if (accessToken) {
           originalRequest.headers["Authorization"] = `Bearer ${accessToken}`;
-          return api(originalRequest);
+          return api(originalRequest); // Retry with new token
         }
       }
-      return Promise.reject(error);
+
+      return Promise.reject(error); // Forward other errors
     }
   );
 
@@ -58,6 +71,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       const response = await api.get("/auth/me");
       setUser(response.data.user);
+      setErrors({});
     } catch (error) {
       console.error("Failed to fetch user:", error);
       if (axios.isAxiosError(error) && error.response?.status === 401) {
@@ -65,6 +79,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         api.defaults.headers.common["Authorization"] = "";
       }
       setUser(null);
+      setErrors({ fetch: "Failed to fetch user data" });
     } finally {
       setIsLoading(false);
     }
@@ -93,8 +108,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
       localStorage.setItem("accessToken", accessToken);
       await fetchUser();
+      setErrors({});
     } catch (error) {
       console.error("Login failed:", error);
+      setErrors({ login: "Invalid email or password" });
       throw error;
     }
   };
@@ -105,8 +122,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setUser(null);
       api.defaults.headers.common["Authorization"] = "";
       localStorage.removeItem("accessToken");
+      setErrors({});
     } catch (error) {
       console.error("Logout failed:", error);
+      setErrors({ logout: "Failed to logout" });
     }
   };
 
@@ -124,14 +143,30 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
       localStorage.setItem("accessToken", accessToken);
       await fetchUser();
+      setErrors({});
     } catch (error) {
       console.error("Registration failed:", error);
+      setErrors({ register: "Registration failed. Please try again." });
       throw error;
     }
   };
 
+  const clearErrors = () => {
+    setErrors({});
+  };
+
   return (
-    <AuthContext.Provider value={{ user, isLoading, login, logout, register }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        isLoading,
+        login,
+        logout,
+        register,
+        errors,
+        clearErrors,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -5,11 +5,24 @@ import SingInHeader from "@/components/login/sign-in/SingInHeader";
 import Divider from "@/components/login/sign-in/Divider";
 import SocialSignIn from "@/components/login/sign-in/SocialSignIn";
 import SignInForm from "@/components/login/sign-in/SignInForm";
+import { useEffect } from "react";
+import { useAuth } from "@/providers/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
   const intl = useIntl();
-
+  const navigate = useNavigate();
   const { control, errors, handleSubmit, onSubmit } = useSignInForm();
+  const {  errors : authErrors , user } = useAuth();
+  console.log('auth errors : ', authErrors.login)
+
+
+  useEffect(() => {
+    if (user ) {
+      navigate(`/profile/${user?.id}`);
+    }
+  }, [navigate, user]);
+
   console.log(errors);
   return (
     <div className="mx-[10%] mt-[8vh] h-[92vh]  flex flex-row-reverse">

@@ -17,6 +17,8 @@ export type AuthContextType = {
   login: (data : TLoginRequestBody) => Promise<void>;
   logout: () => Promise<void>;
   register: (data: TRegisterBody) => Promise<void>;
+  errors: Record<string, string>;
+  clearErrors: () => void
 };
 
 export type AuthProviderProps = {

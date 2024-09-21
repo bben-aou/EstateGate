@@ -103,7 +103,7 @@ export const login = async (req: Request, res: Response) => {
     // Send Access Token in response body
     res.status(200).json({
       accessToken,
-      user: { id: user.id, email: user.email },
+      user: { id: user.id, email: user.email, firstName: user.firstName, lastName: user.lastName , avatar: user.avatar, phoneNumber: user.phoneNumber },
     });
   } catch (error) {
     console.error("Login Error :", error);
@@ -142,7 +142,7 @@ export const me = async (req: Request, res: Response) => {
     }
 
     res.status(200).json({
-      user: { id: user.id, email: user.email, avatar: user.avatar },
+      user: { id: user.id,firstName: user.firstName , lastName: user.lastName ,email: user.email, avatar: user.avatar },
     });
   } catch (error) {
     console.error("Me Endpoint error:", error);
