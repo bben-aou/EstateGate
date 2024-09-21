@@ -6,6 +6,7 @@ import { TSingInForm } from "@/interfaces/inputs/types";
 
 const SignInForm = (props: TSingInForm) => {
   const { control, errors, intl, handleSubmit, onSubmit } = props;
+
   return (
     <div className=" flex flex-col gap-[15px] py-[10px] md:py-[20px]">
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">

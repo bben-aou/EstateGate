@@ -7,6 +7,8 @@ import { useAuth } from "@/providers/AuthProvider";
 
 export const useSignInForm = () => {
     const intl = useIntl();
+
+
     const methods = useForm<ISignInType>({
         defaultValues : loginDefaultValues,
         resolver: zodResolver(getSignInValidators(intl))
@@ -14,13 +16,12 @@ export const useSignInForm = () => {
 
     const { control, watch , handleSubmit , setValue , formState: {errors}, } = methods;
     
-    const { user,  login } = useAuth();
+    const { login } = useAuth();
 
     const  onSubmit =  async (data : ISignInType) => {
         console.log('login submission : ' ,data)
         try {
             await login(data);
-            console.log('user information : ', user)
           } catch (error) {
             alert('Login failed. Please check your credentials.');
           }
