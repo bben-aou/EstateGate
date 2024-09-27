@@ -20,6 +20,7 @@ export default {
         dark: {
           10: "#1e1a3d",
           20: "#000000",
+          30 :'#2c264b'
         },
         gradient: {
           10: "#6a51a2",
@@ -34,6 +35,8 @@ export default {
           30: "#8c8db9",
           40 : "#D4D7E3",
           50: "#F7FBFF",
+          60: "#808bbf",
+          70: "#757c8b"
         },
         banner: {
           10: "#d8dcdf24",
@@ -46,6 +49,16 @@ export default {
           10: "#ffebf0",
           20: "#fc5d6d",
         },
+        success: {
+          10: "#66bb6a"
+        },
+        profile : {
+          SectionBackGround : "#f2f2f2c6"
+        },
+        socialMedia: {
+          instagram: "#c13584",
+          linkedIn: "#0a66c2"
+        }
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -58,7 +71,19 @@ export default {
       lg: "1025px",
       xl: "1280px",
       "2xl": "1536px",
+      'tablet': {'min': '1025px', 'max': '1023px'},
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), function ({ addUtilities }) {
+    const newUtilities = {
+      '.hide-scrollbar::-webkit-scrollbar': {
+        display: 'none',
+      },
+      '.hide-scrollbar': {
+        '-ms-overflow-style': 'none',
+        'scrollbar-width': 'none',
+      },
+    }
+    addUtilities(newUtilities, ['responsive', 'hover'])
+  }],
 };
