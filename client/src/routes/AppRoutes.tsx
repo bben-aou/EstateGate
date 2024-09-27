@@ -1,0 +1,40 @@
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Home from '@pages/home/Home';
+import About from '@pages/about/About';
+import Contact from '@pages/contact/Contact';
+import Agents from '@pages/agents/Agents';
+import NotFound from '@pages/notFound/NotFound';
+import Login from '@/pages/login/sign-in/signIn';
+import SignUp from '@/pages/login/sign-up/SignUp';
+import Profile from '@/pages/profile/Profile';
+import AuthGuard from '@/components/privateRoute/AuthGuard';
+import GoogleAuthRedirect from '@/components/login/sign-in/GoogleAuthRedirect';
+
+function AppRoutes() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/contact" element={<Contact />} />
+
+      {/* Public routes */}
+      <Route element={<AuthGuard requireAuth={false} redirectTo="/profile" />}>
+        <Route path="/login/sign-in" element={<Login />} />
+        <Route path="/login/sign-up" element={<SignUp />} />
+      </Route>
+      <Route path="/auth/google/callback" element={<GoogleAuthRedirect />} />
+
+      {/* Protected routes */}
+      <Route element={<AuthGuard requireAuth={true} redirectTo="/login/sign-in" />}>
+        <Route path="/agents" element={<Agents />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/:userId" element={<Profile />} />
+      </Route>
+
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
+}
+
+export default AppRoutes;
