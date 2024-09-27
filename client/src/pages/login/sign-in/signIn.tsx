@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { useAuth } from "@/providers/AuthProvider";
 import { useNavigate } from "react-router-dom";
 
+//TODO : make sure to trim the inputs values to avoid sending unnecessary whitespace to the backend
 const SignIn = () => {
   const intl = useIntl();
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ const SignIn = () => {
   const {  errors : authErrors , user } = useAuth();
   console.log('auth errors : ', authErrors.login)
 
-
+ 
   useEffect(() => {
     if (user ) {
       navigate(`/profile/${user?.id}`);

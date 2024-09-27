@@ -16,8 +16,9 @@ const Header = () => {
   const intl = useIntl();
   const { isHamburgerMenuOpen, setIsHamburgerMenuOpen } = useHeaderContext();
   const { user, isLoading } = useAuth();
-
+  
   const navigationItems = navItems.map((navItem: TNavItems) => {
+    //TODO : handle the hamburger Menu Display after login - hide login - signUp -
     return (
       <li key={navItem.id}>
         <NavLink

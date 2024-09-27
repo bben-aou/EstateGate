@@ -8,6 +8,8 @@ import { useEffect } from "react";
 import { useIntl } from "react-intl";
 import { useNavigate } from "react-router-dom";
 
+//TODO : make sure to trim the inputs values to avoid sending unnecessary whitespace to the backend
+
 export default function SignUp() {
   const intl = useIntl();
   const navigate = useNavigate();

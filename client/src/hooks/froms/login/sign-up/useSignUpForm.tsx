@@ -38,7 +38,7 @@ export const useSignUpForm = () => {
         duration: 3000,
         action: <FaCheckCircle />,
         className: cn(
-          "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4 bg-[#66bb6a] text-light-0"
+          "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4 bg-success-10 text-light-0"
         ),
       });
     } catch (error) {

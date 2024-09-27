@@ -1,74 +1,75 @@
-import React from "react";
-import {
-  Github,
-  Keyboard,
-  LifeBuoy,
-  LogOut,
-  Settings,
-  User,
-} from "lucide-react";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import LoggedInUser from "../LoggedInUser";
 import { useAuth } from "@/providers/AuthProvider";
-
+import { useIntl } from "react-intl";
+import { MenuItemComponent } from "@/components/header/profileDropDownMenu/MenuDropDownOptions";
+import { createMenuItems } from "@/components/header/profileDropDownMenu/profileMenuIOptionsDropDown";
+import { Fragment } from "react/jsx-runtime";
+import ConditionalRendering from "@/components/common/ConditionalRendering";
+import { Skeleton } from "@/components/ui/skeleton";
+import ProfileAvatar from "@/components/header/profileSection/ProfileAvatar";
+import { IoNotifications } from "react-icons/io5";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const ProfileDropDownMenu = () => {
-  const { logout } = useAuth();
-  //TODO : remove magic strings and use dynamic data instead of static data
+  const { logout, isLoading, user } = useAuth();
+
+  const intl = useIntl();
+  const navigate = useNavigate();
+
+  const menuItems = createMenuItems(logout, navigate);
+
+  const renderedMenuItems = menuItems.map((item) => (
+    <Fragment key={item.labelId}>
+      <DropdownMenuGroup >
+        <MenuItemComponent {...item} />
+      </DropdownMenuGroup>
+      {item.dividerAfter && <DropdownMenuSeparator />}
+    </Fragment>
+  ));
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <button>
-          <LoggedInUser />
-        </button>
-      </DropdownMenuTrigger>
+      <button>
+        <ConditionalRendering
+          condition={!isLoading}
+          defaultComponent={
+            <Skeleton className="hidden md:flex h-full items-center gap-[5px]" />
+          }
+        >
+          <div className="hidden md:flex h-full items-center gap-[5px]">
+            <DropdownMenuTrigger asChild>
+              <div className="flex items-center gap-[5px] bg-light-30 px-[11px] py-[4px] rounded-full cursor-pointer">
+                <button className="rounded-full w-[45px] h-[45px]">
+                  <ProfileAvatar
+                    avatarClassName="w-[39px] h-[39px]"
+                    alt="profile Picture"
+                  />
+                </button>
+                <h1 className="max-w-[150px] truncate font-medium tracking-wide text-black cursor-pointer">
+                  {`${user?.firstName} ${user?.lastName}`}
+                </h1>
+                <MdOutlineKeyboardArrowDown className="text-black w-[20px] h-[22px]" />
+              </div>
+            </DropdownMenuTrigger>
+
+            <IoNotifications className="w-[22px] h-[22px] text-random-30 mx-[10px] cursor-pointer" />
+          </div>
+        </ConditionalRendering>
+      </button>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <User className="mr-2 h-4 w-4" />
-            <span>Profile</span>
-            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-          </DropdownMenuItem>
-
-          <DropdownMenuItem>
-            <Settings className="mr-2 h-4 w-4" />
-            <span>Settings</span>
-            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Keyboard className="mr-2 h-4 w-4" />
-            <span>Keyboard shortcuts</span>
-            <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Github className="mr-2 h-4 w-4" />
-          <span>GitHub</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <LifeBuoy className="mr-2 h-4 w-4" />
-          <span>Support</span>
-        </DropdownMenuItem>
-
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={logout}>
-          <LogOut className="mr-2 h-4 w-4" />
-          <span>Log out</span>
-          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-        </DropdownMenuItem>
+        <DropdownMenuLabel>
+          {intl.formatMessage({
+            id: "header.profileDropDownMenu.items.MyAccountLabel",
+          })}
+        </DropdownMenuLabel>
+        {renderedMenuItems}
       </DropdownMenuContent>
     </DropdownMenu>
   );

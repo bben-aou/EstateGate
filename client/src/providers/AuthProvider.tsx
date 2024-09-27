@@ -116,6 +116,24 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
+
+  const loginWithGoogle = async (token: string) => {
+    try {
+      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      localStorage.setItem("accessToken", token);
+      await fetchUser();
+      setErrors({});
+    } catch (error) {
+      console.error("Login with Google failed:", error);
+      setErrors({ googleAuth: "Login with Google failed" });
+      throw error;
+    }
+  };
+
+  const initiateGoogleLogin = () => {
+    window.location.href = `http://localhost:2000/api/auth/google/callback`;
+  };
+
   const logout = async () => {
     try {
       await api.post("/auth/logout");
@@ -165,6 +183,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         register,
         errors,
         clearErrors,
+        loginWithGoogle,
+        initiateGoogleLogin
       }}
     >
       {children}

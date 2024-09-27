@@ -1,10 +1,11 @@
-import { Response, Request } from "express";
+import { Response, Request, NextFunction } from "express";
 import { hashPassword } from "@utils/hashPassword";
 import prisma from "@lib/prisma";
 import bcrypt from "bcrypt";
-import jwt, { Secret } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { generateAccessToken } from "@utils/generateAccessToken";
 import { generateRefreshToken } from "@utils/generateRefreshToken";
+import passport from "passport";
 
 export const register = async (req: Request, res: Response) => {
   console.log("register endpoint", req.body);
@@ -23,8 +24,11 @@ export const register = async (req: Request, res: Response) => {
         firstName: firstName,
         lastName: lastName,
         phoneNumber: phoneNumber,
+        username: "",
         email: email,
         password: hashedPassword,
+        city: "",
+        country: "",
       },
     });
 
@@ -55,8 +59,11 @@ export const register = async (req: Request, res: Response) => {
         email: newUser.email,
         firstName: newUser.firstName,
         lastName: newUser.lastName,
+        username: newUser.username,
         phoneNumber: newUser.phoneNumber,
         avatar: newUser.avatar,
+        city: newUser.city,
+        country: newUser.country,
       },
     });
   } catch (error) {
@@ -103,7 +110,14 @@ export const login = async (req: Request, res: Response) => {
     // Send Access Token in response body
     res.status(200).json({
       accessToken,
-      user: { id: user.id, email: user.email, firstName: user.firstName, lastName: user.lastName , avatar: user.avatar, phoneNumber: user.phoneNumber },
+      user: {
+        id: user.id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        avatar: user.avatar,
+        phoneNumber: user.phoneNumber,
+      },
     });
   } catch (error) {
     console.error("Login Error :", error);
@@ -142,7 +156,16 @@ export const me = async (req: Request, res: Response) => {
     }
 
     res.status(200).json({
-      user: { id: user.id,firstName: user.firstName , lastName: user.lastName ,email: user.email, avatar: user.avatar },
+      user: {
+        id: user.id,
+        firstName: user.firstName,
+        username: user.username,
+        lastName: user.lastName,
+        email: user.email,
+        avatar: user.avatar,
+        city: user.city,
+        country: user.country,
+      },
     });
   } catch (error) {
     console.error("Me Endpoint error:", error);
@@ -177,4 +200,38 @@ export const refreshToken = async (req: Request, res: Response) => {
     console.error("Refresh Token Error : ", error);
     res.status(500).json({ message: "Internal server error" });
   }
+};
+
+export const googleAuth = passport.authenticate("google", {
+  scope: ["profile", "email"],
+});
+
+export const googleAuthCallback = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  passport.authenticate("google", { session: false }, (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.redirect(
+        `${process.env.CLIENT_URL}/login?error=authentication_failed`
+      );
+    }
+
+    const accessToken = generateAccessToken(user.id);
+    const refreshToken = generateRefreshToken(user.id);
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    });
+
+    res.redirect(
+      `${process.env.CLIENT_URL}/auth/google/callback?token=${accessToken}`
+    );
+  })(req, res, next);
 };
