@@ -14,7 +14,6 @@ const PersonnelInformation = (props: TPersonnelInformation) => {
 
   return (
     <React.Fragment>
-      return (
       <React.Fragment>
         <h1 className="text-[20px] mb-[10px]">
           <FormattedMessage id="profile.PersonnelInformation.title" />
