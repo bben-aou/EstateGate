@@ -33,7 +33,7 @@
     "login.button.sign-up" : "Sign Up",
     "login.splitter.or" : "Or",
     "login.button.sign-in.with.google" : "Sign in with Google",
-    "login.button.sign-in.with.apple" : "Sign in with Apple",
+    "login.button.sign-in.with.apple" : "Sign in with Github",
     "login.sign-up.prompt" : "Don't you have an account? Sign up",
     "login.email.validation.required.message.error" : "Please Enter Your Email",
     "login.email.validation.invalid.email.message.error" : "Please enter a valid email address",
@@ -83,6 +83,7 @@
     "profile.PersonnelInformation.title": "Personnel Information",
     "profile.RecentlyViewed.title" : "Recently Viewed",
     "profile.latestMessages.title" : "Latest Messages",
-    "profile.savedProperties.title" : "Saved Properties"
+    "profile.savedProperties.title" : "Saved Properties",
+    "OAuthRedirect.processing.authentication.title" : "Processing your login..."
 
 }
