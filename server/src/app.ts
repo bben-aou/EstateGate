@@ -8,6 +8,7 @@ import dotenv from "dotenv";
 import session from "express-session";
 import passport from "passport";
 import { setupGoogleStrategy } from "@config/googleStrategy";
+import { setupGitHubStrategy } from "@config/githubStrategy";
 
 
 
@@ -22,6 +23,7 @@ app.use(session({
 
 app.use(passport.initialize());
 setupGoogleStrategy();
+setupGitHubStrategy()
 
 app.use(bodyParser.json());
 app.use(cookieParser());

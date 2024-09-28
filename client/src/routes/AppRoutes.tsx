@@ -9,7 +9,7 @@ import Login from '@/pages/login/sign-in/signIn';
 import SignUp from '@/pages/login/sign-up/SignUp';
 import Profile from '@/pages/profile/Profile';
 import AuthGuard from '@/components/privateRoute/AuthGuard';
-import GoogleAuthRedirect from '@/components/login/sign-in/GoogleAuthRedirect';
+import OAuthRedirect from '@/components/login/sign-in/OAuthRedirect';
 
 function AppRoutes() {
   return (
@@ -23,7 +23,7 @@ function AppRoutes() {
         <Route path="/login/sign-in" element={<Login />} />
         <Route path="/login/sign-up" element={<SignUp />} />
       </Route>
-      <Route path="/auth/google/callback" element={<GoogleAuthRedirect />} />
+      <Route path="/auth/:provider/callback" element={<OAuthRedirect />} />
 
       {/* Protected routes */}
       <Route element={<AuthGuard requireAuth={true} redirectTo="/login/sign-in" />}>

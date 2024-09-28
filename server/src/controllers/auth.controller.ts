@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 import { generateAccessToken } from "@utils/generateAccessToken";
 import { generateRefreshToken } from "@utils/generateRefreshToken";
 import passport from "passport";
+import { User } from "@prisma/client";
 
 export const register = async (req: Request, res: Response) => {
   console.log("register endpoint", req.body);
@@ -206,6 +207,9 @@ export const googleAuth = passport.authenticate("google", {
   scope: ["profile", "email"],
 });
 
+export const githubAuth = passport.authenticate("github", {
+  scope: ["profile", "email"],
+});
 export const googleAuthCallback = (
   req: Request,
   res: Response,
@@ -234,4 +238,47 @@ export const googleAuthCallback = (
       `${process.env.CLIENT_URL}/auth/google/callback?token=${accessToken}`
     );
   })(req, res, next);
+};
+
+// github controller
+interface AuthError extends Error {
+  status?: number;
+}
+
+export const githubAuthCallback = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  passport.authenticate(
+    "github",
+    { session: false },
+    (
+      err: AuthError,
+      user: User | false | undefined,
+      info: object | undefined
+    ) => {
+      if (err) {
+        return next(err);
+      }
+      if (!user) {
+        return res.redirect(
+          `${process.env.CLIENT_URL}/login?error=authentication_failed`
+        );
+      }
+
+      const accessToken = generateAccessToken(user.id);
+      const refreshToken = generateRefreshToken(user.id);
+
+      res.cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      });
+
+      res.redirect(
+        `${process.env.CLIENT_URL}/auth/github/callback?token=${accessToken}`
+      );
+    }
+  )(req, res, next);
 };

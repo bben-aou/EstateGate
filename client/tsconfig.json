@@ -1,23 +1,21 @@
 {
   "compilerOptions": {
-    "target": "ESNext",                         // Specify ECMAScript target version
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],   // Specify library files to be included
-    "jsx": "react-jsx",                         // Use React 17+ JSX transform
-    "module": "ESNext",                         // Specify module code generation
-    "moduleResolution": "node",                 // Type of module resolution to use
-    "resolveJsonModule": true,                  // Include modules imported with .json extension
-    "esModuleInterop": true,                    // Enable import/export interoperability between CommonJS and ES Modules
-    "skipLibCheck": true,                       // Skip type checking of declaration files
-    "strict": true,                             // Enable all strict type checking options
-    "forceConsistentCasingInFileNames": true,   // Ensure consistent casing in file names
-    "isolatedModules": true,                    // Ensure each file is treated as a separate module
-    "noEmit": true,                             // Do not emit outputs
-    "allowJs": true,                            // Allow JavaScript files to be compiled
+    "target": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "jsx": "react-jsx",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "allowJs": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
+      "@/*": ["./src/*"],
       "@assets/*": ["src/assets/*"],
       "@components/*": ["src/components/*"],
       "@hooks/*": ["src/hooks/*"],
@@ -30,8 +28,8 @@
       "@global/*": ["src/global/*"],
       "@store/*": ["src/store/*"]
     },
-    "types": ["node", "react", "react-dom"]     // Add types for node, react, and react-dom
+    "types": ["node", "react", "react-dom", "jest"]
   },
-  "include": ["src"],                           // Files to include in the project
-  "exclude": ["node_modules", "dist"]           // Files to exclude from the project
+  "include": ["src", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules", "dist"]
 }

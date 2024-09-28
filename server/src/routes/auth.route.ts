@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { googleAuth, googleAuthCallback, login, logout, me , refreshToken, register } from '@controllers/auth.controller';
+import { githubAuth, githubAuthCallback, googleAuth, googleAuthCallback, login, logout, me , refreshToken, register } from '@controllers/auth.controller';
 
 const router = Router();
 
@@ -12,5 +12,10 @@ router.get('/me',me)
 //Google Authentication routes
 router.get('/google', googleAuth);
 router.get('/google/callback', googleAuthCallback);
+//Github Authentication routes
+router.get('/github', githubAuth);
+router.get('/github/callback', githubAuthCallback);
+
+
 
 export default router;

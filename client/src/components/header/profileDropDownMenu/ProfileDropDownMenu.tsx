@@ -50,6 +50,7 @@ const ProfileDropDownMenu = () => {
                   <ProfileAvatar
                     avatarClassName="w-[39px] h-[39px]"
                     alt="profile Picture"
+                    avatarUrl={user?.avatar}
                   />
                 </button>
                 <h1 className="max-w-[150px] truncate font-medium tracking-wide text-black cursor-pointer">
