@@ -8,7 +8,7 @@ export type User = {
   phoneNumber: string;
   city? :string,
   country?:string,
-  userName?: string,
+  username?: string,
   avatar?: string;
 };
 
@@ -22,8 +22,9 @@ export type AuthContextType = {
   register: (data: TRegisterBody) => Promise<void>;
   errors: Record<string, string>;
   clearErrors: () => void
-  loginWithGoogle: (token: string) => Promise<void>
+  OAuthAuthentication: (token: string) => Promise<void>
   initiateGoogleLogin: () => void
+  initiateGithubLogin: () => void
 };
 
 export type AuthProviderProps = {
