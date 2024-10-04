@@ -36,7 +36,9 @@ export default {
           40 : "#D4D7E3",
           50: "#F7FBFF",
           60: "#808bbf",
-          70: "#757c8b"
+          70: "#757c8b",
+          80: "#4564d5d6",
+          90:"#F0EFFB"
         },
         banner: {
           10: "#d8dcdf24",
@@ -64,6 +66,9 @@ export default {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      boxShadow: {
+        'banner': '0px 2px 3px -1px rgba(0,0,0,0.1), 0px 1px 0px 0px rgba(25,28,33,0.02), 0px 0px 0px 1px rgba(25,28,33,0.08)',
       },
     },
     screens: {
