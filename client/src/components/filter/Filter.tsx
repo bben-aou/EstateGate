@@ -150,7 +150,7 @@ const Filter = (props: IFilter) => {
               </div>
             </div>
 
-            <div className="md:hidden w-full h-[40px] flex items-center justify-center m-[2%]">
+            <div className="md:hidden h-[40px] flex items-center justify-center m-[2%]">
               <button
                 className="w-full h-full bg-light-60  mx-[25px] rounded-sm text-light-0"
                 type="button"
