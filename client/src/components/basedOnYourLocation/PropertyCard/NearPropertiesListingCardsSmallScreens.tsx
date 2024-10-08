@@ -30,7 +30,7 @@ const NearPropertiesListingCardsSmallScreens = (
     </CarouselItem>
   ));
   return (
-    <div className="lg:hidden pb-[50px] mt-[48px] flex flex-col items-center">
+    <div className="lg:hidden pb-[20px] lg:pb-[50px] mt-[48px] flex flex-col items-center">
       <Carousel className="md:w-full">
         <CarouselContent className="w-[300px] md:w-[382px] p-2">
           {propertiesCardsMapper}
