@@ -7,13 +7,14 @@ import { GiProgression } from "react-icons/gi";
 const statisticsData: IStaticItems[] = [
     {
       title: 'Active Clients',
-      value: '25.6K',
+      value: 25.6,
       subTitle: '21% more than last month',
+      valueClassName: "text-light-60",
       Icon: FaRegHeart,
     },
     {
       title: 'New Followers',
-      value: '12.4K',
+      value: 12.4,
       valueClassName: "text-random-20",
       subTitle: '18% more than last week',
       Icon: GiProgression,
@@ -21,7 +22,7 @@ const statisticsData: IStaticItems[] = [
     },
     {
       title: 'Ready Proprieties',
-      value: '4,200',
+      value: 35,
       valueClassName: "text-statistics-10",
       subTitle: '10% more than last week',
       Icon: FaUsers,
@@ -29,7 +30,7 @@ const statisticsData: IStaticItems[] = [
     },
     {
       title: 'Happy Client',
-      value: '15%',
+      value: 150,
       valueClassName: "text-statistics-20",
       subTitle: 'Consistent growth rate',
       Icon: AiTwotoneLike,
