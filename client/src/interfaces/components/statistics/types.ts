@@ -2,7 +2,7 @@ import { IconType } from "react-icons";
 
 export type IStaticItems = {
     title?: string;
-    value?: string | number;
+    value: number;
     subTitle?: string;
     Icon: IconType;
     valueClassName? : string;
