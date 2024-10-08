@@ -18,7 +18,7 @@ const AdvantageCard = (props: TAdvantageCard) => {
         <h1 className="mt-[30px] md:mt-[20px] mb-[10px] text-[18px] font-semibold tracking-[0.2px]">
           {title}
         </h1>
-        <p className="font-light text-gray-600">{description}</p>
+        <p className="font-light md:text-[13px] lg:text-sm text-gray-600">{description}</p>
       </div>
     </div>
   );
