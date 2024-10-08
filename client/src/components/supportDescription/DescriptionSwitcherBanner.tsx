@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 
 const DescriptionSwitcherBanner = () => {
   return (
-    <div className="md:mx-[10%] lg:mx-0 lg:w-[50%] mt-[50px] flex items-center px-[20px] justify-center lg:pl-[20px]">
+    <div className="md:mx-[10%] lg:mx-0 lg:w-[50%] mt-[50px] flex items-center px-[20px] justify-center lg:pl-[20px] z-[20] ">
       <div className="lg:w-[444px]  lg:h-[416px] ">
         <Tabs defaultValue="tenants" className="lg:w-[400px] ">
           <TabsList className="grid lg:w-full grid-cols-2 bg-banner-10 rounded-[4px] h-[64px] text-random-80 border-[1.5px] border-gray-300">
