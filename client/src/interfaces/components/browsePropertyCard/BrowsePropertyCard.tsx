@@ -1,9 +1,11 @@
+import { BorderBeam } from "@/components/ui/border-beam";
 import { FormattedMessage } from "react-intl";
 
 const BrowsePropertyCard = () => {
   return (
     <div className="lg:h-full w-full lg:w-[40%]  flex items-center justify-center">
-      <div className="h-[500px] w-full mx-[10px] md:mx-0 md:w-[70%] border-[1px]  rounded-[6px] bg-banner-10 p-[40px] ">
+      <div className="h-[500px] w-full mx-[10px] md:mx-0 md:w-[70%] border-[1px] relative rounded-[6px] bg-banner-10 p-[40px] ">
+        <BorderBeam size={250} duration={12} delay={9} />
         <h1 className="text-[30px] font-bold text-light-60 leading-10 mb-[16px]">
           <FormattedMessage id="home.advantages.section.browsePropertyCard.title" />
         </h1>

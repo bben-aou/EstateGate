@@ -1,4 +1,5 @@
 import { IStaticItems } from "@interfaces/components/statistics/types";
+import NumberTicker from "@/components/ui/number-ticker";
 
 const StatisticItem = (props: IStaticItems) => {
   const {
@@ -20,7 +21,8 @@ const StatisticItem = (props: IStaticItems) => {
         <h1
           className={`text-[36px] font-extrabold text-light-60 leading-[45px] } ${valueClassName}`}
         >
-          {value}
+          <NumberTicker value={value} className={valueClassName }/>
+          <span className={valueClassName}>K</span>
         </h1>
         <h4 className="text-[12px] leading-4">{subTitle}</h4>
       </div>
