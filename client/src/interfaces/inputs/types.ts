@@ -40,6 +40,9 @@ export enum InputType {
   SEASON = "season",
   CUSTOM = "custom",
   PHONE = "phone",
+  Button = "button",
+  multiSelect = "multiSelect",
+  Upload = "upload",
 }
 
 export interface ControlledInputProps<

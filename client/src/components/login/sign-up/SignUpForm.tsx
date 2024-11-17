@@ -5,8 +5,8 @@ import PhoneNumberInput from "@/components/inputs/phoneNumberInput/PhoneNumberIn
 import FirstNameInput from "@/components/inputs/sign-up/FirstNameInput";
 import LastNameInput from "@/components/inputs/sign-up/LastNameInput";
 import { TSingUpForm } from "@/interfaces/inputs/types";
-import SignUpButton from "./SignUpButton";
-import CheckBox from "./CheckBox";
+import SignUpButton from "@/components/login/sign-up/SignUpButton";
+import CheckBox from "@/components/login/sign-up/CheckBox";
 
 const SignUpForm = (props: TSingUpForm) => {
   const { control, errors, handleSubmit, onSubmit, intl, isLoading } = props;
