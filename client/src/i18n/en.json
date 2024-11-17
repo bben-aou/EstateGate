@@ -133,16 +133,51 @@
     "profile.RecentlyViewed.title" : "Recently Viewed",
     "profile.latestMessages.title" : "Latest Messages",
     "profile.savedProperties.title" : "Saved Properties",
-    "OAuthRedirect.processing.authentication.title" : "Processing your login..."
-
-
-
-
-
-
-
-
-
+    "OAuthRedirect.processing.authentication.title" : "Processing your login...",
+    "postProperty.FirstStep.component.FirstStep.content.firstStep.header": "Tell us about your property",
+    "postProperty.FirstStep.component.FirstStep.title": "step 1",
+    "postProperty.FirstStep.component.FirstStep.content.firstStep.body": "In this step, we'll ask you which type of property you're listing and if it's for rent or sale. Then provide the location and specify the property's capacity, such as number of guests it can accommodate or number of bedrooms.",
+    "postProperty.FirstStep.component.FirstStep.content.firstStep.button": "Next",
+    "stepper.propertyTypeStep.apartment.label": "Apartment",
+    "stepper.propertyTypeStep.house.label": "House",
+    "stepper.propertyTypeStep.villa.label": "Villa",
+    "stepper.propertyTypeStep.riad.label": "Riad",
+    "stepper.propertyTypeStep.farm.label": "Farm",
+    "stepper.propertyTypeStep.studio.label": "Studio",
+    "stepper.propertyTypeStep.duplex.label": "Duplex",
+    "stepper.propertyTypeStep.terrain.label": "Terrain",
+    "stepper.propertyTypeStep.commercialLocal.label": "Commercial Local",
+    "stepper.propertyTypeStep.office.label": "Office",
+    "stepper.propertyTypeStep.building.label": "Building",
+    "stepper.propertyTypeStep.room.label": "Room",
+    "stepper.propertyTypeStep.hotel.label": "Hotel",
+    "stepper.propertyTypeStep.stepHeader.label": "Which of these best describes your place?",
+    "stepper.propertyTypeStep.previousButton.label": "Previous",
+    "stepper.propertyLocationStep.stepHeader.label": "Where's your place located?",
+    "stepper.propertyTypeStep.searchLocation.no.results": " No matches found! If you're looking for a specific address, try entering just the city or region instead.",
+    "stepper.propertyDetails.stepHeader.label": "Let's start with the essentials of your property",
+    "stepper.propertyDetailItem.square.metre.unit": "m²",
+    "stepper.secondStep.title": "step 2",
+    "stepper.secondStep.stepHeader.label": "Let your property's personality shine",
+    "stepper.secondStep.description": "In this step, you'll add some of the amenities your place offers, along with a collection of photos. Then, you'll create a title and description for your property.",
+    "stepper.PropertyFeatures.stepHeader.label": "Highlight your property's unique features",
+    "stepper.houseFeatures.subtitle" : "You can add more features after you publish your listing.",
+    "stepper.houseFeatures.equippedKitchen.label" : "Equipped kitchen",
+    "stepper.houseFeatures.elevator.label" : "Elevator",
+    "stepper.houseFeatures.pool.label" : "Pool",
+    "stepper.houseFeatures.balcony.label" :  "Balcony",
+    "stepper.houseFeatures.parking.label" : "Parking",
+    "stepper.houseFeatures.garage.label" : "Garage",
+    "stepper.houseFeatures.garden.label" : "Garden",
+    "stepper.houseFeatures.washer.label" : "Washer",
+    "stepper.houseFeatures.security.label": "Security",
+    "stepper.houseFeatures.wifi.label" : "WIFI",
+    "stepper.houseFeatures.airConditioning.label" : "Air Conditioning",
+    "stepper.houseFeatures.tv.label" : "TV",
+    "stepper.propertyPhotos.stepHeader.label" : "How Your Property Looks Like ?",
+    "stepper.propertyPhotos.uploadImageOrDragAndDrop.label": "Click To Upload Your Images Or Drag And Drop",
+    "stepper.propertyPhotos.uploadInstructions" : "up to 5 images, 4MB for each",
+    "stepper.propertyPhotos.clickOrDropToUpload": "Click Here to Upload your Image or Drag and drop"
 
 
 

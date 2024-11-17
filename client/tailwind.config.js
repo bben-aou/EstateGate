@@ -44,6 +44,7 @@ export default {
         banner: {
           10: "#d8dcdf24",
           20: "#2643ab",
+          30: "#222"
         },
         statistics: {
           10: "#2d9491",

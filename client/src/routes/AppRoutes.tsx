@@ -10,6 +10,7 @@ import SignUp from '@/pages/login/sign-up/SignUp';
 import Profile from '@/pages/profile/Profile';
 import AuthGuard from '@/components/privateRoute/AuthGuard';
 import OAuthRedirect from '@/components/login/sign-in/OAuthRedirect';
+import PostProperty from '@/pages/post-property/PostProperty';
 
 function AppRoutes() {
   return (
@@ -24,12 +25,12 @@ function AppRoutes() {
         <Route path="/login/sign-up" element={<SignUp />} />
       </Route>
       <Route path="/auth/:provider/callback" element={<OAuthRedirect />} />
-
       {/* Protected routes */}
       <Route element={<AuthGuard requireAuth={true} redirectTo="/login/sign-in" />}>
         <Route path="/agents" element={<Agents />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile/:userId" element={<Profile />} />
+        <Route path="post-property" element={<PostProperty/>}/>
       </Route>
 
       <Route path="*" element={<NotFound />} />
