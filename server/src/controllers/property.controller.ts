@@ -1,16 +1,47 @@
-import { Request, Response } from 'express';
+import { Request, Response } from "express";
 import prisma from "@lib/prisma";
-import { PropertyType, OwnershipType } from '@prisma/client';
+import { PropertyType, OwnershipType, PropertyFeature } from "@prisma/client";
+
 
 // Initialize property
 export const initializeProperty = async (req: Request, res: Response) => {
   try {
-    const property = await prisma.property.create({
-      data: {
+    const existingDraftProperty = await prisma.property.findFirst({
+      where: {
         ownerId: req.userId!,
         title: "Draft Property",
-        propertyType: "HOUSE",
-        ownershipType: "SALE",
+      },
+      include: {
+        owner: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            email: true,
+            phoneNumber: true,
+          },
+        },
+      },
+    });
+
+    if (existingDraftProperty) {
+      return res.status(200).json({
+        message: "Draft property already exists",
+        property: existingDraftProperty,
+      });
+    }
+
+    // If no draft exists, create a new one
+    const property = await prisma.property.create({
+      data: {
+        owner: {
+          connect: {
+            id: req.userId!,
+          },
+        },
+        title: "Draft Property",
+        propertyType: PropertyType.HOUSE,
+        ownershipType: OwnershipType.OWNER,
         price: 0,
         address: "",
         city: "",
@@ -21,20 +52,33 @@ export const initializeProperty = async (req: Request, res: Response) => {
         bedrooms: 0,
         bathrooms: 0,
         garages: 0,
-        squareMeters: 0
-      }
+        squareMeters: 0,
+       features: []
+      },
+      include: {
+        owner: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            email: true,
+            phoneNumber: true,
+          },
+        },
+      },
     });
 
-    res.status(201).json({
-      message: 'Property draft created successfully',
-      property
+    return res.status(201).json({
+      message: "Property draft created successfully",
+      property,
     });
   } catch (error) {
-    console.error('Error creating property:', error);
-    res.status(500).json({ message: 'Failed to create property' });
+    console.error("Error creating property:", error);
+    return res.status(500).json({
+      message: "Failed to create property",
+    });
   }
 };
-
 // Upload property photos
 export const uploadPropertyPhotos = async (req: Request, res: Response) => {
   try {
@@ -42,12 +86,12 @@ export const uploadPropertyPhotos = async (req: Request, res: Response) => {
     const { propertyId } = req.params;
 
     if (!files || files.length === 0) {
-      return res.status(400).json({ message: 'No files uploaded' });
+      return res.status(400).json({ message: "No files uploaded" });
     }
 
     // Get current photo count
     const currentPhotos = await prisma.propertyPhoto.count({
-      where: { propertyId }
+      where: { propertyId },
     });
 
     // Create photo records
@@ -61,56 +105,77 @@ export const uploadPropertyPhotos = async (req: Request, res: Response) => {
             path: `/uploads/${file.filename}`,
             mimetype: file.mimetype,
             size: file.size,
-            isMainPhoto: currentPhotos === 0 && index === 0 // First photo of property is main
-          }
+            isMainPhoto: currentPhotos === 0 && index === 0, // First photo of property is main
+          },
         })
       )
     );
 
     res.status(200).json({
-      message: 'Photos uploaded successfully',
-      photos
+      message: "Photos uploaded successfully",
+      photos,
     });
   } catch (error) {
-    console.error('Error uploading photos:', error);
-    res.status(500).json({ message: 'Failed to upload photos' });
+    console.error("Error uploading photos:", error);
+    res.status(500).json({ message: "Failed to upload photos" });
   }
 };
 
 // Update property
+
 export const updateProperty = async (req: Request, res: Response) => {
   try {
+    // Get property ID from params
     const { propertyId } = req.params;
+    console.log("Property ID : ", propertyId);
+
+    // Get update data from body
     const updateData = req.body;
 
+    // Check if property exists
+    const existingProperty = await prisma.property.findUnique({
+      where: { id: propertyId },
+    });
+
+    if (!existingProperty) {
+      return res.status(404).json({
+        message: "Property not found",
+        propertyId,
+      });
+    }
+
+    const features: PropertyFeature[] = updateData.features as PropertyFeature[];
+
+    // Update property
     const property = await prisma.property.update({
       where: { id: propertyId },
       data: {
+        // Basic info
         title: updateData.title,
         description: updateData.description,
         propertyType: updateData.propertyType as PropertyType,
         ownershipType: updateData.ownershipType as OwnershipType,
         price: parseFloat(updateData.price),
+
+        // Location info
         address: updateData.address,
-        city: updateData.city,
-        state: updateData.state,
-        zipCode: updateData.zipCode,
-        country: updateData.country,
+        city: updateData.city || "",
+        state: updateData.state || "",
+        zipCode: updateData.zipCode || "",
+        country: updateData.country || "",
         latitude: updateData.latitude ? parseFloat(updateData.latitude) : null,
         longitude: updateData.longitude ? parseFloat(updateData.longitude) : null,
+
+        // Property details
         totalFloors: parseInt(updateData.totalFloors),
         bedrooms: parseInt(updateData.bedrooms),
         bathrooms: parseInt(updateData.bathrooms),
         garages: parseInt(updateData.garages),
         squareMeters: parseFloat(updateData.squareMeters),
         yearBuilt: updateData.yearBuilt ? parseInt(updateData.yearBuilt) : null,
-        hasPool: updateData.hasPool || false,
-        hasGarden: updateData.hasGarden || false,
-        hasSecurity: updateData.hasSecurity || false,
-        hasAirConditioning: updateData.hasAirConditioning || false,
-        hasCentralHeating: updateData.hasCentralHeating || false,
-        hasInternet: updateData.hasInternet || false,
-        isFurnished: updateData.isFurnished || false,
+
+        // Features as array
+        features: features,
       },
       include: {
         photos: true,
@@ -120,22 +185,28 @@ export const updateProperty = async (req: Request, res: Response) => {
             firstName: true,
             lastName: true,
             email: true,
-            phoneNumber: true
-          }
-        }
-      }
+            phoneNumber: true,
+          },
+        },
+      },
     });
 
+    // Send success response
     res.status(200).json({
-      message: 'Property updated successfully',
-      property
+      message: "Property updated successfully",
+      property,
     });
   } catch (error) {
-    console.error('Error updating property:', error);
-    res.status(500).json({ message: 'Failed to update property' });
+    // Log the full error for debugging
+    console.error("Error updating property:", error);
+
+    // Send error response
+    res.status(500).json({
+      message: "Failed to update property",
+      error: (error as Error).message,
+    });
   }
 };
-
 // Get property
 export const getProperty = async (req: Request, res: Response) => {
   try {
@@ -151,22 +222,22 @@ export const getProperty = async (req: Request, res: Response) => {
             firstName: true,
             lastName: true,
             email: true,
-            phoneNumber: true
-          }
-        }
-      }
+            phoneNumber: true,
+          },
+        },
+      },
     });
 
     if (!property) {
-      return res.status(404).json({ message: 'Property not found' });
+      return res.status(404).json({ message: "Property not found" });
     }
 
     res.status(200).json({
-      property
+      property,
     });
   } catch (error) {
-    console.error('Error fetching property:', error);
-    res.status(500).json({ message: 'Failed to fetch property' });
+    console.error("Error fetching property:", error);
+    res.status(500).json({ message: "Failed to fetch property" });
   }
 };
 
@@ -176,16 +247,16 @@ export const deletePropertyPhoto = async (req: Request, res: Response) => {
     const { photoId } = req.params;
 
     const deletedPhoto = await prisma.propertyPhoto.delete({
-      where: { id: photoId }
+      where: { id: photoId },
     });
 
     res.status(200).json({
-      message: 'Photo deleted successfully',
-      deletedPhoto
+      message: "Photo deleted successfully",
+      deletedPhoto,
     });
   } catch (error) {
-    console.error('Error deleting photo:', error);
-    res.status(500).json({ message: 'Failed to delete photo' });
+    console.error("Error deleting photo:", error);
+    res.status(500).json({ message: "Failed to delete photo" });
   }
 };
 
@@ -197,21 +268,21 @@ export const updateMainPhoto = async (req: Request, res: Response) => {
     // First, remove main photo status from all photos
     await prisma.propertyPhoto.updateMany({
       where: { propertyId },
-      data: { isMainPhoto: false }
+      data: { isMainPhoto: false },
     });
 
     // Set new main photo
     const updatedPhoto = await prisma.propertyPhoto.update({
       where: { id: photoId },
-      data: { isMainPhoto: true }
+      data: { isMainPhoto: true },
     });
 
     res.status(200).json({
-      message: 'Main photo updated successfully',
-      photo: updatedPhoto
+      message: "Main photo updated successfully",
+      photo: updatedPhoto,
     });
   } catch (error) {
-    console.error('Error updating main photo:', error);
-    res.status(500).json({ message: 'Failed to update main photo' });
+    console.error("Error updating main photo:", error);
+    res.status(500).json({ message: "Failed to update main photo" });
   }
 };
