@@ -7,19 +7,41 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Enums for property-related fields
 enum PropertyType {
-  HOUSE
   APARTMENT
+  HOUSE
   VILLA
-  TOWNHOUSE
-  LAND
-  COMMERCIAL
+  RIAD
+  FARM
+  STUDIO
+  DUPLEX
+  TERRAIN
+  LOCAL_COMMERCIAL
+  BUREAU
+  BUILDING
+  ROOM
+  HOTEL
 }
 
 enum OwnershipType {
-  SALE
-  RENT
+  OWNER
+  TENANT
+  AGENT
+  OTHER
+}
+enum PropertyFeature {
+  POOL
+  GARDEN
+  SECURITY
+  AIR_CONDITIONING
+  WIFI
+  TV
+  BALCONY
+  PARKING
+  GARAGE
+  WASHER
+  ELEVATOR
+  EQUIPPED_KITCHEN
 }
 
 model User {
@@ -36,59 +58,41 @@ model User {
   password    String
   avatar      String?
   createdAt   DateTime   @default(now())
-  // Add relation to Property
-  properties  Property[] // One user can have many properties
+  properties  Property[]
 }
 
 model Property {
-  id            String         @id @default(auto()) @map("_id") @db.ObjectId
-
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-
-  // Property Type & Ownership
-  propertyType  PropertyType
-  ownershipType OwnershipType
-  price         Float
-
-  // Location
-  address       String
-  city          String
-  state         String
-  zipCode       String?
-  country       String
-  latitude      Float?
-  longitude     Float?
-
-  // Property Information
-  title         String
-  description   String
-  totalFloors   Int
-  bedrooms      Int
-  bathrooms     Int
-  garages       Int
-  squareMeters  Float
-  yearBuilt     Int?
-
-  // Property Features
-  hasPool           Boolean   @default(false)
-  hasGarden         Boolean   @default(false)
-  hasSecurity       Boolean   @default(false)
-  hasAirConditioning Boolean  @default(false)
-  hasCentralHeating Boolean   @default(false)
-  hasInternet       Boolean   @default(false)
-  isFurnished       Boolean   @default(false)
-
-  // Relations
-  photos        PropertyPhoto[]
-  owner         User           @relation(fields: [ownerId], references: [id])
-  ownerId       String         @db.ObjectId
+  id                  String            @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  propertyType        PropertyType
+  ownershipType       OwnershipType
+  price               Float
+  address             String?
+  city                String?
+  state               String?
+  zipCode             String?
+  country             String
+  latitude            Float?
+  longitude           Float?
+  title               String
+  description         String
+  totalFloors         Int
+  bedrooms            Int
+  bathrooms           Int
+  garages             Int
+  squareMeters        Float
+  yearBuilt           Int?
+  features            PropertyFeature[]
+  photos              PropertyPhoto[]
+  owner               User              @relation(fields: [ownerId], references: [id])
+  ownerId             String            @db.ObjectId
 
   @@index([ownerId])
 }
 
 model PropertyPhoto {
-  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
   fileName     String
   originalName String
   path         String

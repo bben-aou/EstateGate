@@ -10,7 +10,6 @@ const PropertyDetailsList = () => {
       <PropertyDetailItem control={control} maxValue={15} name='propertyDetails.bathrooms' label='bathrooms'/>
       <PropertyDetailItem control={control} maxValue={15} name='propertyDetails.garages' label='garages'/>
       <PropertyDetailItem control={control} unitLabel='stepper.propertyDetailItem.square.metre.unit' name='propertyDetails.area' label='area' />
-      <button>click</button>
     </div>
   )
 }

@@ -1,15 +1,17 @@
-import NextAndPreviousButtons from "@/components/common/stepper/buttons/NextAndPreviousButtons";
-import StepHeader from "@/components/create-new-post/steps/components/common/StepHeader";
 import { useStepperStore } from "@/store/stepper";
-import PropertyPhotosBody from "@/components/create-new-post/steps/components/propertyPhotos/PropertyPhotosBody";
-import { useFormContext } from "react-hook-form";
-import { PropertyFormSchema } from "@/validators/publishPropertyStepper/validators";
+import StepHeader from "@components/create-new-post/steps/components/common/StepHeader";
+import NextAndPreviousButtons from "@/components/common/stepper/buttons/NextAndPreviousButtons";
+import PropertyDescriptionInput from "@components/create-new-post/steps/components/propertyDescription/PropertyDescriptionInput";
+import { useIntl } from "react-intl";
 import { useToast } from "@/hooks/use-toast";
+import { PropertyFormSchema } from "@/validators/publishPropertyStepper/validators";
+import { useFormContext } from "react-hook-form";
 import { cn } from "@/lib/utils";
 
-const PropertyPhotos = () => {
+const PropertyDescription = () => {
   const { nextStep, previousStep, canGoNext, canGoPrevious } =
     useStepperStore();
+  const intl = useIntl();
   const { toast } = useToast();
 
   const {
@@ -17,15 +19,15 @@ const PropertyPhotos = () => {
     formState: { errors },
   } = useFormContext<PropertyFormSchema>();
   const handleNext = async () => {
-    const isValid = await trigger("propertyPhotos");
+    const isValid = await trigger("propertyDescription");
     if (isValid) {
       nextStep();
     } else {
-      console.log("Validation errors:", errors.propertyPhotos?.message);
+      console.log("Validation errors:", errors.propertyDescription?.message);
       toast({
         title: "Validation",
         variant: "destructive",
-        description: errors.propertyPhotos?.message,
+        description: errors.propertyDescription?.message,
         duration: 2000,
         className: cn(
           "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"
@@ -33,10 +35,17 @@ const PropertyPhotos = () => {
       });
     }
   };
+
   return (
     <div className="h-[60%]">
-      <StepHeader label="stepper.propertyPhotos.stepHeader.label" />
-      <PropertyPhotosBody />
+      <StepHeader
+        label="stepper.propertyDescription.stepHeader.label"
+        hasSubtitle
+        subtitleLabel={intl.formatMessage({
+          id: "stepper.propertyDescription.stepHeader.subtitle.label",
+        })}
+      />
+      <PropertyDescriptionInput />
       <NextAndPreviousButtons
         nextLabel="postProperty.FirstStep.component.FirstStep.content.firstStep.button"
         previousLabel="stepper.propertyTypeStep.previousButton.label"
@@ -48,4 +57,4 @@ const PropertyPhotos = () => {
     </div>
   );
 };
-export default PropertyPhotos;
+export default PropertyDescription;

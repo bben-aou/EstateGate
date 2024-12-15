@@ -5,6 +5,8 @@ import InstructionsStepBody from "@/components/create-new-post/steps/components/
 import InstructionsStepNextPreviousButton from "@/components/create-new-post/steps/components/IntroStep/InstructionsStepNextPreviousButton";
 import { TInstructionsStep } from "@/interfaces/components/stepper/types";
 import ConditionalRendering from "@/components/common/ConditionalRendering";
+import { useInitiateProperty } from "@/hooks/stepper/api/useInitiateProperty";
+import { useNavigate } from "react-router-dom";
 
 const InstructionsStep = (props: TInstructionsStep) => {
   const {
@@ -16,6 +18,27 @@ const InstructionsStep = (props: TInstructionsStep) => {
     previousButtonLabel,
   } = props;
   const { nextStep, previousStep } = useStepperStore();
+  const navigate = useNavigate();
+  const { initiateProperty } = useInitiateProperty({
+    config: {
+      onSuccess: (data) => {
+        console.log("initiate data", data);
+        if (data?.property.id) {
+          navigate(`/post-property/${data.property.id}`);
+        }
+      },
+      onError: (error) => {
+        console.error("initiate error", error);
+      },
+    },
+  });
+
+  const handleClick = () => {
+    nextStep();
+    if (!canGoBack) {
+      initiateProperty();
+    }
+  };
 
   return (
     <div>
@@ -27,7 +50,7 @@ const InstructionsStep = (props: TInstructionsStep) => {
         defaultComponent={
           <InstructionsStepNextPreviousButton
             label={nextButtonLabel}
-            onClickHandler={nextStep}
+            onClickHandler={handleClick}
           />
         }
       >

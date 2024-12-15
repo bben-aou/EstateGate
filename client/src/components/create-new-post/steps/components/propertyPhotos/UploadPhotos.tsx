@@ -1,33 +1,76 @@
 import { DEFAULT_ALLOWED_TYPES, DEFAULT_MAX_FILES, DEFAULT_MAX_SIZE } from "@/constants/global/constants";
-import useUploadPropertyPhotos, {
-} from "@/hooks/stepper/steps/useUploadPropertyPhotos";
+import useUploadPropertyPhotos from "@/hooks/stepper/steps/useUploadPropertyPhotos";
 import { SelectedFile } from "@/interfaces/photos/types";
 import { cn } from "@/lib/utils";
 import { useEffect } from "react";
-import { IoCloudUploadSharp } from "react-icons/io5";
-import { IoCloseCircleOutline } from "react-icons/io5";
+import { IoCloudUploadSharp, IoCloseCircleOutline } from "react-icons/io5";
 import { FormattedMessage } from "react-intl";
-
+import { useToast } from "@/hooks/use-toast";
+import api from "@/providers/AuthProvider";
 
 export interface ImageUploadProps {
   maxFileSize?: number;
   maxFiles?: number;
   allowedFileTypes?: string[];
-  propertyId?: string;
+  propertyId: string;
   value?: SelectedFile[];
   onChange?: (files: SelectedFile[]) => void;
   onBlur?: () => void;
-  onClick?: (value: string) => void;
 }
+
 const UploadPhotos = (props: ImageUploadProps) => {
   const {
     maxFileSize = DEFAULT_MAX_SIZE,
     maxFiles = DEFAULT_MAX_FILES,
     allowedFileTypes = DEFAULT_ALLOWED_TYPES,
+    propertyId,
     value = [],
     onChange,
     onBlur,
   } = props;
+
+  const { toast } = useToast();
+
+  const uploadToServer = async (files: SelectedFile[]) => {
+    try {
+      const formData = new FormData();
+      files.forEach(fileData => {
+        formData.append('photos', fileData.file);
+      });
+
+      const response = await api.post(`/upload/${propertyId}/photos`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        }
+      });
+
+      toast({
+        title: "Success",
+        description: "Photos uploaded successfully",
+        duration: 4000,
+        className: cn("top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"),
+      });
+      return response.data;
+    } catch (error) {
+      toast({
+        title: "Error",
+        variant: "destructive",
+        description: "Failed to upload photos",
+        duration: 4000,
+        className: cn("top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"),
+      });
+      throw error;
+    }
+  };
+
+  const handleFileChange = async (files: SelectedFile[]) => {
+    if (onChange) {
+      onChange(files);
+    }
+    if (files.length > 0) {
+      await uploadToServer(files);
+    }
+  };
 
   const {
     dropZoneRef,
@@ -44,7 +87,7 @@ const UploadPhotos = (props: ImageUploadProps) => {
     maxFiles,
     allowedFileTypes,
     value,
-    onChange,
+    onChange: handleFileChange,
   });
 
   useEffect(() => {

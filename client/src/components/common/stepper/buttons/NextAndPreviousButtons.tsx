@@ -13,6 +13,7 @@ const NextAndPreviousButtons = (props: TNextAndPreviousButtons) => {
     previousOnclickHandler,
     isNextDisable,
     isPreviousDisable,
+    disable,
   } = props;
   return (
     <div className=" px-[60px] flex justify-between">
@@ -21,7 +22,7 @@ const NextAndPreviousButtons = (props: TNextAndPreviousButtons) => {
           "my-[24px] w-[150px] h-[54px] bg-light-60 text-light-0 disabled:bg-gray-400 disabled:cursor-not-allowed rounded-[8px]",
           nextClassName
         )}
-        disabled={isPreviousDisable}
+        disabled={isPreviousDisable }
         onClick={previousOnclickHandler}
         type="button"
       >
@@ -33,7 +34,7 @@ const NextAndPreviousButtons = (props: TNextAndPreviousButtons) => {
           previousClassName
         )}
         onClick={nextOnclickHandler}
-        disabled={isNextDisable}
+        disabled={isNextDisable || disable}
         type="button"
       >
         <FormattedMessage id={nextLabel} />
