@@ -12,7 +12,7 @@ interface IStepperState {
 
 export const useStepperStore = create<IStepperState>((set, get) => ({
     currentStep: 0,
-    totalSteps: 8,
+    totalSteps: 13,
     setCurrentStep: (newStep) => set({ currentStep: newStep }),
     nextStep: () => set((state) => ({ 
         currentStep: Math.min(state.currentStep + 1, state.totalSteps - 1) 
