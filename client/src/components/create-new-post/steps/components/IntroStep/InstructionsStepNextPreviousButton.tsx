@@ -12,6 +12,7 @@ const InstructionsStepNextPreviousButton = (props: TFirstStepNextButton) => {
         styling
       )}
       onClick={onClickHandler}
+      type="submit"
     >
       <FormattedMessage id={label} />
     </Button>
