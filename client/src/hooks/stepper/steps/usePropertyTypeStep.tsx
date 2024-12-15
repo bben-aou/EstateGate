@@ -12,73 +12,74 @@ import { IoBedOutline } from "react-icons/io5";
 import { LiaHotelSolid } from "react-icons/lia";
 import { TPropertyTypes } from "@/interfaces/components/stepper/types";
 import { useFormContext } from "react-hook-form";
+import { EPropertyType } from "@/enums/propertyType";
 
 
 const usePropertyTypeStep = () => {
   const methods =useFormContext();
   const PropertyTypes: TPropertyTypes[]  = [
     {
-      value: "apartment",
+      value: EPropertyType.APARTMENT,
       label: "stepper.propertyTypeStep.apartment.label",
       Icon: BsBuilding,
     },
     {
-      value: "house",
+      value: EPropertyType.HOUSE,
       label: "stepper.propertyTypeStep.house.label",
       Icon: BsHouse,
     },
     {
-      value: "villa",
+      value: EPropertyType.VILLA,
       label: "stepper.propertyTypeStep.villa.label",
       Icon: HiOutlineBuildingLibrary,
     },
     {
-      value: "riad",
+      value: EPropertyType.RIAD,
       label: "stepper.propertyTypeStep.riad.label",
       Icon: LuCastle,
     },
     {
-      value: "farm",
+      value: EPropertyType.FARM,
       label: "stepper.propertyTypeStep.farm.label",
       Icon: GiFarmTractor,
     },
     {
-      value: "studio",
+      value: EPropertyType.STUDIO,
       label: "stepper.propertyTypeStep.studio.label",
       Icon: RiBuilding4Line,
     },
     {
-      value: "duplex",
+      value: EPropertyType.DUPLEX,
       label: "stepper.propertyTypeStep.duplex.label",
       Icon: MdOutlineMeetingRoom,
     },
     {
-      value: "terrain",
+      value: EPropertyType.TERRAIN,
       label: "stepper.propertyTypeStep.terrain.label",
       Icon: GiGroundSprout,
     },
     {
-      value: "localCommercial",
+      value: EPropertyType.LOCAL_COMMERCIAL,
       label: "stepper.propertyTypeStep.commercialLocal.label",
       Icon: MdOutlineLocalGroceryStore,
     },
     {
-      value: "bureau",
+      value: EPropertyType.BUREAU,
       label: "stepper.propertyTypeStep.office.label",
       Icon: PiOfficeChair,
     },
     {
-      value: "building",
+      value: EPropertyType.BUILDING,
       label: "stepper.propertyTypeStep.building.label",
       Icon: BsBuildings,
     },
     {
-      value: "room",
+      value: EPropertyType.ROOM,
       label: "stepper.propertyTypeStep.room.label",
       Icon: IoBedOutline,
     },
     {
-      value: "hotel",
+      value: EPropertyType.HOTEL,
       label: "stepper.propertyTypeStep.hotel.label",
       Icon: LiaHotelSolid,
     },
