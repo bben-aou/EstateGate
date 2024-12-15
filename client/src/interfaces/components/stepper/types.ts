@@ -29,6 +29,7 @@ export type TNextAndPreviousButtons = {
   previousOnclickHandler?: () => void;
   isNextDisable?: boolean;
   isPreviousDisable?: boolean;
+  disable?: boolean;
 };
 
 

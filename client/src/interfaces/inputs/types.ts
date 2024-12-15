@@ -14,6 +14,7 @@ import { IntlShape } from "react-intl";
 export enum InputType {
   TEXT = "text",
   NUMBER = "number",
+  AMOUNT = "amount",
   DATE = "date",
   SELECT = "select",
   CHECKBOX = "checkbox",
