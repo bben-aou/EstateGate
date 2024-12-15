@@ -177,8 +177,19 @@
     "stepper.propertyPhotos.stepHeader.label" : "How Your Property Looks Like ?",
     "stepper.propertyPhotos.uploadImageOrDragAndDrop.label": "Click To Upload Your Images Or Drag And Drop",
     "stepper.propertyPhotos.uploadInstructions" : "up to 5 images, 4MB for each",
-    "stepper.propertyPhotos.clickOrDropToUpload": "Click Here to Upload your Image or Drag and drop"
-
+    "stepper.propertyPhotos.clickOrDropToUpload": "Click Here to Upload your Image or Drag and drop",
+    "stepper.propertyTitle.stepHeader.label" : "Now, let's give your property a title",
+    "stepper.propertyTitle.stepHeader.subtitle.label" : "Snappy titles grab attention. Don't worry, it's not set in stone!",
+    "stepper.propertyTitle.stepHeader.placeholder.label" : "What would you call your place?",
+    "stepper.propertyDescription.stepHeader.label" : "Next, let's describe your property",
+    "stepper.propertyDescription.stepHeader.subtitle.label" : "What makes guests love your space? Share those special touches",
+    "stepper.finalStep.stepHeader.label" : "Ready to welcome guests?",
+    "stepper.finalStep.subStep.label" : "Your property is just one click away from going live",
+    "stepper.propertyTypeStep.publish.label" :  "publish",
+    "stepper.finalStep.title.label" : "Final Step",
+    "stepper.finalStep.subTitle.label" : "Ready to welcome guests?",
+    "stepper.propertyPrice.stepHeader.label": "Let's set the right price for your property",
+    "stepper.propertyPrice.stepHeader.subtitle.label": "Choose a competitive price to attract potential buyers. You can always adjust it later!"
 
 
 }
