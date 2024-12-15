@@ -30,7 +30,7 @@ function AppRoutes() {
         <Route path="/agents" element={<Agents />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile/:userId" element={<Profile />} />
-        <Route path="post-property" element={<PostProperty/>}/>
+        <Route path="post-property/:propertyId?" element={<PostProperty/>}/>
       </Route>
 
       <Route path="*" element={<NotFound />} />
