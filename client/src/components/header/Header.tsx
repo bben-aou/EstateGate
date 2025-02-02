@@ -1,22 +1,24 @@
 import { FormattedMessage, useIntl } from "react-intl";
 import { navItems } from "@components/header/navigationItems";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import LoginButton from "@components/buttons/LoginButton";
 import SignUpButton from "@components/buttons/SignUpButton";
 import { RiMenu5Fill as OpenMenuIcon } from "react-icons/ri";
-import { Fragment } from "react/jsx-runtime";
 import HamburgerMenu from "@components/header/hamburgerMenu/HamburgerMenu";
 import { TNavItems } from "@interfaces/index";
 import { useHeaderContext } from "@global/states/hooks/useHeaderContext";
 import ConditionalRendering from "@components/common/ConditionalRendering";
 import { useAuth } from "@/providers/AuthProvider";
 import ProfileDropDownMenu from "@/components/header/profileDropDownMenu/ProfileDropDownMenu";
+import clsx from "clsx";
 
 const Header = () => {
   const intl = useIntl();
   const { isHamburgerMenuOpen, setIsHamburgerMenuOpen } = useHeaderContext();
   const { user, isLoading } = useAuth();
-  
+  const location = useLocation();
+  const isPropertyPage = location.pathname.split("/").includes("property");
+
   const navigationItems = navItems.map((navItem: TNavItems) => {
     //TODO : handle the hamburger Menu Display after login - hide login - signUp -
     return (
@@ -40,8 +42,16 @@ const Header = () => {
     );
   });
   return (
-    <Fragment>
-      <header className="absolute w-full h-[8vh] md:flex md:items-center md:justify-between px-[25px] lg:px-[70px] border-b-[1px] border-light-30">
+    <div className="w-full flex flex-col  h-[8vh] border-b-[1px] border-light-30">
+      <header
+        className={clsx(
+          "absolute h-[8vh] md:flex md:items-center md:justify-between px-[25px]  lg:px-[70px] ",
+          {
+            "w-full xl:max-w-7xl xl:mx-auto self-center": isPropertyPage,
+            "w-full": !isPropertyPage,
+          }
+        )}
+      >
         <nav className="h-full flex justify-between items-center md:flex-row md:justify-start md:gap-[35px] lg:gap-[100px]">
           <Link
             to={"/"}
@@ -66,7 +76,7 @@ const Header = () => {
         </nav>
         <ConditionalRendering
           condition={!user && !isLoading}
-          defaultComponent={<ProfileDropDownMenu  />}
+          defaultComponent={<ProfileDropDownMenu />}
         >
           <div className="hidden md:flex h-full  items-center md:gap-[5px] lg:gap-[20px]">
             <LoginButton
@@ -83,7 +93,7 @@ const Header = () => {
       <ConditionalRendering condition={isHamburgerMenuOpen}>
         <HamburgerMenu />
       </ConditionalRendering>
-    </Fragment>
+    </div>
   );
 };
 export default Header;

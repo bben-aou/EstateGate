@@ -16,7 +16,7 @@ const NextAndPreviousButtons = (props: TNextAndPreviousButtons) => {
     disable,
   } = props;
   return (
-    <div className=" px-[60px] flex justify-between">
+    <div className="px-[20px] md:px-[60px] flex justify-between">
       <Button
         className={cn(
           "my-[24px] w-[150px] h-[54px] bg-light-60 text-light-0 disabled:bg-gray-400 disabled:cursor-not-allowed rounded-[8px]",

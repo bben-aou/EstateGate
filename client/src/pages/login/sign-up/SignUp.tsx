@@ -25,7 +25,7 @@ export default function SignUp() {
   }, [navigate, user]);
 
   return (
-    <div className="mx-[10%] mt-[8vh] h-[92vh] flex flex-row-reverse ">
+    <div className="mx-[10%] h-[92vh] flex flex-row-reverse ">
       <LoginImage
         imgSrc="/sign-up.jpg"
         imgAlt="Login"

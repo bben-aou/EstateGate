@@ -1,5 +1,4 @@
 import Filter from "@components/filter/Filter";
-import React from "react";
 import { useIntl } from "react-intl";
 import Statistics from "@/components/statistics/Statistics";
 

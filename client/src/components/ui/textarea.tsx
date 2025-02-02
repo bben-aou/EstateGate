@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
-import ConditionalRendering from "../common/ConditionalRendering";
+import ConditionalRendering from "@components/common/ConditionalRendering";
 
 const Textarea = React.forwardRef<
   HTMLTextAreaElement,

@@ -17,7 +17,7 @@ import { propertyFormSchema, PropertyFormSchema } from "@/validators/publishProp
 import { EPropertyType } from "@/enums/propertyType";
 import { EPropertyAuthority } from "@/enums/ownership";
 import PropertyPrice from "@/components/create-new-post/steps/PropertyPrice";
-import { useSubmitProperty } from "@/hooks/sumbitPostProperty/useSubmitProperty";
+import { useSubmitProperty } from "@/hooks/property/sumbitPostProperty/useSubmitProperty";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const PostProperty = () => {
@@ -88,11 +88,11 @@ const PostProperty = () => {
   ];
 
   return (
-    <div className="md:mx-[10%] mt-[8vh] h-[92vh] flex hide-scrollbar">
+    <div className="md:mx-[10%] md:h-[92vh] flex hide-scrollbar ">
       <FormProvider {...methods}>
         <form
           onSubmit={methods.handleSubmit((data)=> handlePublish(data))}
-          className="w-[60%] h-full flex flex-col justify-center pr-[25px]"
+          className="md:w-[60%] h-full flex flex-col mt-[10%] md:mt-0 md:justify-center md:pr-[25px]"
         >
           {steps[currentStep].component}
         </form>

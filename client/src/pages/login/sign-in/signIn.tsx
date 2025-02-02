@@ -26,7 +26,7 @@ const SignIn = () => {
 
   console.log(errors);
   return (
-    <div className="mx-[10%] mt-[8vh] h-[92vh]  flex flex-row-reverse">
+    <div className="mx-[10%]  h-[92vh]  flex flex-row-reverse">
       <LoginImage
         imgSrc="/login.jpg"
         imgAlt="Login"

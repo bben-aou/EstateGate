@@ -7,6 +7,9 @@
   :root {
     --radius: 0.5rem
   }
+  html, body {
+    @apply text-[#222] dark:text-gray-100;
+  }
 }
 
 

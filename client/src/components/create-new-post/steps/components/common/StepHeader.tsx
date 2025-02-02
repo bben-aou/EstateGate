@@ -9,7 +9,7 @@ const StepHeader = (props: TStepHeader) => {
     <div>
       <h1
         className={cn(
-          "text-[32px] font-medium leading-9 w-full text-center",
+          "text-[26px] md:text-[32px] font-medium leading-9 w-full text-center",
           headerClassName
         )}
       >

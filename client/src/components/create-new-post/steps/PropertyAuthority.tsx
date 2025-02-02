@@ -7,7 +7,7 @@ const PropertyAuthority = () => {
   const { nextStep, previousStep, canGoNext, canGoPrevious } =
     useStepperStore();
   return (
-    <div className="h-[60%] ">
+    <div className="h-[80vh] md:h-[60%]">
       <StepHeader label="stepper.propertyTypeStep.stepHeader.label" />
       <AuthoritiesList/>
       <NextAndPreviousButtons

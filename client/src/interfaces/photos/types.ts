@@ -13,4 +13,4 @@ export interface SelectedFile {
     onChange?: (files: SelectedFile[]) => void;
     onBlur?: () => void;
     onClick?: (value: string) => void;
-  }
+}

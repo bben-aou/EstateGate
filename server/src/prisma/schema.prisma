@@ -29,6 +29,7 @@ enum OwnershipType {
   AGENT
   OTHER
 }
+
 enum PropertyFeature {
   POOL
   GARDEN
@@ -46,8 +47,8 @@ enum PropertyFeature {
 
 model User {
   id          String     @id @default(auto()) @map("_id") @db.ObjectId
-  googleId    String?    @unique
-  githubId    String?    @unique
+  googleId    String?
+  githubId    String?
   firstName   String
   lastName    String
   username    String
@@ -59,6 +60,7 @@ model User {
   avatar      String?
   createdAt   DateTime   @default(now())
   properties  Property[]
+  reviews     Review[]
 }
 
 model Property {
@@ -87,6 +89,8 @@ model Property {
   photos              PropertyPhoto[]
   owner               User              @relation(fields: [ownerId], references: [id])
   ownerId             String            @db.ObjectId
+  reviews             Review[]
+  averageRating       Float?
 
   @@index([ownerId])
 }
@@ -104,4 +108,20 @@ model PropertyPhoto {
   propertyId   String   @db.ObjectId
 
   @@index([propertyId])
+}
+
+model Review {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  rating      Int      @default(0)
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  property    Property @relation(fields: [propertyId], references: [id])
+  propertyId  String   @db.ObjectId
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String   @db.ObjectId
+
+  @@unique([propertyId, userId])
+  @@index([propertyId])
+  @@index([userId])
 }

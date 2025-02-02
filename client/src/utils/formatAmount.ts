@@ -1,9 +1,13 @@
-export const formatAmount = (value: string | number | undefined): string => {
+export const formatAmount = (
+  value: string | number | undefined,
+  currency?: string
+): string => {
   if (!value) return "";
   const cleanNum = String(value).replace(/\s/g, "");
   const [wholePart, decimalPart] = cleanNum.split(".");
   const formattedWhole = wholePart.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-  return decimalPart ? `${formattedWhole}.${decimalPart}` : formattedWhole;
+  const formattedAmount = decimalPart ? `${formattedWhole}.${decimalPart}` : formattedWhole;
+  return currency ? `${formattedAmount} ${currency}` : formattedAmount;
 };
 
 export const validateAmount = (value: string): boolean => {

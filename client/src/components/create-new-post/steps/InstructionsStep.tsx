@@ -41,7 +41,7 @@ const InstructionsStep = (props: TInstructionsStep) => {
   };
 
   return (
-    <div>
+    <div className="px-[20px] md:px-0">
       <InstructionsStepHeader title={headerTitle} label={headerLabel} />
       <InstructionsStepBody description={description} />
 

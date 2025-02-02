@@ -5,7 +5,7 @@ import { TFirstSteepImage } from "@/interfaces/components/createNewPost/types";
 const FirstStepImage = (props : TFirstSteepImage) => {
     const { img, alt } = props;
   return (
-    <div className="w-[40%] flex items-center">
+    <div className="hidden w-full md:w-[40%] md:flex items-center">
       <SuspenseImage
         src={img}
         alt={alt ?? "image"}

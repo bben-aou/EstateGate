@@ -9,7 +9,6 @@ type TProfileAvatar = {
 };
 const ProfileAvatar = (props: TProfileAvatar) => {
   const { avatarUrl, alt, containerClassName, avatarClassName } = props;
-  console.log('avatarUrl', avatarUrl);
   return (
     <Avatar
       className={cn("rounded-full w-[45px] h-[45px]", containerClassName)}

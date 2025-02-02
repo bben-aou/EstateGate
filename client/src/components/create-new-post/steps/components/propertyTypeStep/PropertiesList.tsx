@@ -7,7 +7,7 @@ const PropertiesList = () => {
   const { control } = useFormContext();
 
   return (
-    <div className="py-[40px] px-[50px] overflow-auto h-[75%] grid place-items-center grid-cols-3 gap-4">
+    <div className="py-[40px] px-[50px] overflow-auto h-[75%] grid place-items-center md:grid-cols-3 gap-4">
       <ControlledInput
         name="propertyType"
         control={control}

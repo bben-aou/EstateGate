@@ -103,7 +103,6 @@ export interface IPasswordInput<T extends FieldValues> {
   label? : string;
 }
 
-// export interface TEmailInput extends ISignInInput  {}
 export interface TPasswordInput extends ISignInInput {}
 export interface TPhoneInput extends ISignUpInput {}
 export interface TUserName extends ISignUpInput {}
@@ -155,3 +154,10 @@ export type TSignUpButton = {
   label: string;
   containerClassName?: string;
 };
+
+
+export type TRatingInputProps = {
+  value?: number,
+  onChange : (value : number) => void,
+  onBlur : () => void,
+}

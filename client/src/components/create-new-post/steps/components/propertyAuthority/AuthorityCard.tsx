@@ -19,7 +19,7 @@ const AuthorityCard = (props: TAuthorityCard) => {
       onClick={onClick}
       type="button"
       className={cn(
-        " w-[630px] whitespace-normal h-[96px] rounded-[12px] border flex  items-center justify-between px-[25px] border-gray-400 hover:border-none hover:ring-banner-20 hover:ring-2 cursor-pointer",{'border-none ring-banner-20 ring-2' : isSelected},
+        " md:w-[630px] whitespace-normal h-[96px] rounded-[12px] border flex  items-center justify-between px-[25px] border-gray-400 hover:border-none hover:ring-banner-20 hover:ring-2 cursor-pointer",{'border-none ring-banner-20 ring-2' : isSelected},
         containerClassName
       )}
     >
@@ -42,7 +42,7 @@ const AuthorityCard = (props: TAuthorityCard) => {
         </p>
       </div>
       <Icon
-        className={cn("w-[36px] h-[36px] text-banner-20 ", iconClassName)}
+        className={cn("w-[44px] md:w-[36px] h-[36px] text-banner-20 ", iconClassName)}
       />
     </Button>
   );

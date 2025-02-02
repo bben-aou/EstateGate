@@ -7,7 +7,7 @@ const PropertyDetails = () => {
   const { nextStep, previousStep, canGoNext, canGoPrevious } =
     useStepperStore();
   return (
-    <div className="h-[60%]">
+    <div className=" md:h-[60%]">
       <StepHeader label="stepper.propertyDetails.stepHeader.label" />
       <PropertyDetailsList/>
       <NextAndPreviousButtons
