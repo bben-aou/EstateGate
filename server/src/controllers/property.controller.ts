@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import prisma from "@lib/prisma";
 import { PropertyType, OwnershipType, PropertyFeature } from "@prisma/client";
 
-
 // Initialize property
 export const initializeProperty = async (req: Request, res: Response) => {
   try {
@@ -53,7 +52,9 @@ export const initializeProperty = async (req: Request, res: Response) => {
         bathrooms: 0,
         garages: 0,
         squareMeters: 0,
-       features: []
+        features: [],
+        reviews: { create: [] },
+        averageRating: 1,
       },
       include: {
         owner: {
@@ -144,7 +145,8 @@ export const updateProperty = async (req: Request, res: Response) => {
       });
     }
 
-    const features: PropertyFeature[] = updateData.features as PropertyFeature[];
+    const features: PropertyFeature[] =
+      updateData.features as PropertyFeature[];
 
     // Update property
     const property = await prisma.property.update({
@@ -164,7 +166,9 @@ export const updateProperty = async (req: Request, res: Response) => {
         zipCode: updateData.zipCode || "",
         country: updateData.country || "",
         latitude: updateData.latitude ? parseFloat(updateData.latitude) : null,
-        longitude: updateData.longitude ? parseFloat(updateData.longitude) : null,
+        longitude: updateData.longitude
+          ? parseFloat(updateData.longitude)
+          : null,
 
         // Property details
         totalFloors: parseInt(updateData.totalFloors),
@@ -186,6 +190,18 @@ export const updateProperty = async (req: Request, res: Response) => {
             lastName: true,
             email: true,
             phoneNumber: true,
+          },
+        },
+        reviews: {
+          include: {
+            user: {
+              select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+                avatar: true,
+              },
+            },
           },
         },
       },
@@ -223,6 +239,21 @@ export const getProperty = async (req: Request, res: Response) => {
             lastName: true,
             email: true,
             phoneNumber: true,
+            avatar: true,
+            createdAt: true,
+          },
+        },
+        reviews: {
+          include: {
+            user: {
+              select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+                avatar: true,
+                createdAt: true,
+              },
+            },
           },
         },
       },
@@ -284,5 +315,122 @@ export const updateMainPhoto = async (req: Request, res: Response) => {
   } catch (error) {
     console.error("Error updating main photo:", error);
     res.status(500).json({ message: "Failed to update main photo" });
+  }
+};
+
+export const addPropertyReview = async (req: Request, res: Response) => {
+  try {
+    const { propertyId } = req.params;
+    const { rating, description, reviewOwnerId } = req.body;
+    const userId = reviewOwnerId;
+    // Input validation
+    if (!rating || !description) {
+      return res.status(400).json({
+        success: false,
+        message: "Rating and description are required",
+      });
+    }
+
+    if (rating < 1 || rating > 5) {
+      return res.status(400).json({
+        success: false,
+        message: "Rating must be between 1 and 5",
+      });
+    }
+
+    if (description.length > 500) {
+      return res.status(400).json({
+        success: false,
+        message: "Description must not exceed 500 characters",
+      });
+    }
+
+    // Check if property exists
+    const property = await prisma.property.findUnique({
+      where: { id: propertyId },
+    });
+
+    if (!property) {
+      return res.status(404).json({
+        success: false,
+        message: "Property not found",
+      });
+    }
+
+    // Don't allow property owner to review their own property
+    if (property.ownerId === userId) {
+      return res.status(400).json({
+        success: false,
+        message: "You cannot review your own property",
+      });
+    }
+
+    // Use transaction to create review and update average rating
+    const result = await prisma.$transaction(async (tx) => {
+      // Create the review
+      const newReview = await tx.review.create({
+        data: {
+          rating,
+          description,
+          property: { connect: { id: propertyId } },
+          user: { connect: { id: userId } },
+        },
+        include: {
+          user: {
+            select: {
+              id: true,
+              firstName: true,
+              lastName: true,
+              avatar: true,
+              createdAt: true,
+            },
+          },
+        },
+      });
+
+      // Calculate new average rating
+      const allReviews = await tx.review.findMany({
+        where: { propertyId },
+      });
+
+      const averageRating =
+        allReviews.reduce((sum, review) => sum + review.rating, 0) /
+        allReviews.length;
+
+      // Update property with new average rating
+      await tx.property.update({
+        where: { id: propertyId },
+        data: { averageRating },
+      });
+
+      return { newReview, averageRating };
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "Review added successfully",
+      data: {
+        review: result.newReview,
+        propertyAverageRating: result.averageRating,
+      },
+    });
+  } catch (error) {
+    // Handle unique constraint violation (user already reviewed)
+    if (
+      error instanceof Error &&
+      typeof (error as any).code === "string" &&
+      (error as any).code === "P2002"
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "You have already reviewed this property",
+      });
+    }
+
+    console.error("Error adding property review:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
   }
 };
