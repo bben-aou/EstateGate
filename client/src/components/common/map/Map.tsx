@@ -26,6 +26,8 @@ type TMap = {
   containerClassName?: string;
   markerLngLat?: [number, number];
   markerStyle?: PredefinedMarkerStyle | CustomMarkerStyle;
+  scrollZoom?: boolean;
+  showZoomControls?: boolean;
 };
 
 const predefinedStyles: Record<PredefinedMarkerStyle, CustomMarkerStyle> = {
@@ -38,7 +40,14 @@ const predefinedStyles: Record<PredefinedMarkerStyle, CustomMarkerStyle> = {
 };
 
 const Map: React.FC<TMap> = (props) => {
-  const { containerClassName, markerLngLat, markerStyle = 'default' } = props;
+  const { 
+    containerClassName, 
+    markerLngLat, 
+    markerStyle = 'default',
+    scrollZoom = true,
+    showZoomControls = false
+  } = props;
+  
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
 
@@ -57,10 +66,15 @@ const Map: React.FC<TMap> = (props) => {
       container: mapContainerRef.current,
       style: 'mapbox://styles/mapbox/streets-v11',
       center: markerLngLat || [-74.5, 40],
-      zoom: 9
+      zoom: 9,
+      scrollZoom: scrollZoom 
     });
 
     mapRef.current = map;
+
+    if (showZoomControls) {
+      map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+    }
 
     map.on('load', () => {
       if (markerLngLat) {
@@ -109,14 +123,14 @@ const Map: React.FC<TMap> = (props) => {
         mapRef.current.remove();
       }
     };
-  }, [markerLngLat, markerStyle]);
+  }, [markerLngLat, markerStyle, scrollZoom, showZoomControls]);
 
   return (
     <div 
       id='map-container' 
       ref={mapContainerRef} 
-      style={{borderRadius: '8px', height:'100%', bottom:'0px'}} 
-      className={containerClassName}
+      style={{ borderRadius: '8px', height: '100%', width: '100%' }} 
+      className={`${containerClassName} relative`}
     />
   );
 };

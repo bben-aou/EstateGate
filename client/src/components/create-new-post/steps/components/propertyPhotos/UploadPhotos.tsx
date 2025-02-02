@@ -114,7 +114,7 @@ const UploadPhotos = (props: ImageUploadProps) => {
         tabIndex={0}
       >
         <IoCloudUploadSharp className="w-[55px] h-[55px] text-light-60" />
-        <h1 className="font-semibold">
+        <h1 className="font-semibold text-center md:text-start">
           <FormattedMessage id="stepper.propertyPhotos.uploadImageOrDragAndDrop.label" />
         </h1>
         <h4 className="font-light tracking-wide leading-7">

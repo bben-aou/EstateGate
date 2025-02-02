@@ -31,14 +31,14 @@ const FindPropertyLocation = () => {
 
   return (
     <div className="py-[40px] flex flex-col justify-center h-[75%] relative">
-      <div className="absolute self-center flex justify-center top-0 w-[88%]">
+      <div className="absolute self-center flex justify-center top-0 w-[88%] ">
         <ControlledSearchLocationInput
           options={data}
           updateQuerySearch={setQuery}
           isLoading={isLoading}
         />
       </div>
-      <div className="w-[70%] h-[80%] self-center absolute bottom-0">
+      <div className="w-[70%] h-[80%] self-center absolute bottom-0 ">
         <Map
           markerLngLat={markerLngLat}
           markerStyle={{

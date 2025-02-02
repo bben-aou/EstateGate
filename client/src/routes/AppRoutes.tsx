@@ -11,6 +11,7 @@ import Profile from '@/pages/profile/Profile';
 import AuthGuard from '@/components/privateRoute/AuthGuard';
 import OAuthRedirect from '@/components/login/sign-in/OAuthRedirect';
 import PostProperty from '@/pages/post-property/PostProperty';
+import PropertyProfile from '@/pages/propertyProfile';
 
 function AppRoutes() {
   return (
@@ -31,6 +32,7 @@ function AppRoutes() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile/:userId" element={<Profile />} />
         <Route path="post-property/:propertyId?" element={<PostProperty/>}/>
+        <Route path="/property/:propertyType/:propertyId" element={<PropertyProfile/>} />
       </Route>
 
       <Route path="*" element={<NotFound />} />

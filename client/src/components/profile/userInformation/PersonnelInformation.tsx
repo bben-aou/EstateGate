@@ -14,12 +14,10 @@ const PersonnelInformation = (props: TPersonnelInformation) => {
 
   return (
     <React.Fragment>
-      <React.Fragment>
-        <h1 className="text-[20px] mb-[10px]">
-          <FormattedMessage id="profile.PersonnelInformation.title" />
-        </h1>
-        {userInformationMapping}
-      </React.Fragment>
+      <h1 className="text-[20px] mb-[10px]">
+        <FormattedMessage id="profile.PersonnelInformation.title" />
+      </h1>
+      {userInformationMapping}
     </React.Fragment>
   );
 };

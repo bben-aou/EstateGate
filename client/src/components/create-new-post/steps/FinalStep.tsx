@@ -10,7 +10,7 @@ const FinalStep = () => {
 
 
   return (
-    <div>
+    <div className="px-[20px] md:px-0">
       <InstructionsStepHeader
         title={intl.formatMessage({ id: "stepper.finalStep.title.label" })}
         label={intl.formatMessage({ id: "stepper.finalStep.subTitle.label" })}

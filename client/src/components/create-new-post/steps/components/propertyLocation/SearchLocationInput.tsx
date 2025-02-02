@@ -46,7 +46,7 @@ const SearchLocationInput = ({
       />
 
       <ConditionalRendering condition={showOptions}>
-        <div className="z-[999] w-[80%] bg-light-0 shadow-lg rounded-b-lg h-[302px] overflow-auto absolute top-[70px]">
+        <div className="z-[999] w-[80%] bg-light-0 shadow-lg rounded-b-lg max-h-[302px] overflow-auto absolute top-[70px]">
           {isLoading ? (
             <div className="w-full h-full flex items-center justify-center">
               <Spinner />

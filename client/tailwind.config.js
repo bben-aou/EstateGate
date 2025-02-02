@@ -40,11 +40,13 @@ export default {
           70: "#757c8b",
           80: "#4564d5d6",
           90: "#F0EFFB",
+          100: "#6a6a6a"
         },
         banner: {
           10: "#d8dcdf24",
           20: "#2643ab",
-          30: "#222"
+          30: "#222",
+          40: '#F7F7F7'
         },
         statistics: {
           10: "#2d9491",
@@ -53,17 +55,25 @@ export default {
         error: {
           10: "#ffebf0",
           20: "#fc5d6d",
+          30: "#f44336",
         },
         success: {
           10: "#66bb6a",
         },
         profile: {
           SectionBackGround: "#f2f2f2c6",
+          banner : '#ddd'
         },
         socialMedia: {
           instagram: "#c13584",
           linkedIn: "#0a66c2",
         },
+        typography : {
+          10 : "#222222"
+        },
+        line : {
+          10 : "#DDDDDD"
+        }
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -158,6 +168,7 @@ export default {
   },
   plugins: [
     require("tailwindcss-animate"),
+    require("daisyui"),
     function ({ addUtilities }) {
       const newUtilities = {
         ".hide-scrollbar::-webkit-scrollbar": {

@@ -33,7 +33,7 @@ export const UseUserAvatar = (props : TUseUserAvatar) => {
             duration: 1500,
             action: <FaCheckCircle />,
             className: cn(
-              "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4 bg-success-10 text-light-0"
+              "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4 bg-typography-10 text-light-0"
             ),
           });
           setIsPopoverOpen(false);

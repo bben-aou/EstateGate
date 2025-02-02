@@ -4,7 +4,7 @@ import { useFormContext } from 'react-hook-form';
 const PropertyDetailsList = () => {
   const { control , } = useFormContext();
   return (
-    <div className="py-[40px] h-[75%]  gap-[12px] overflow-y-auto px-[85px] p-[25px]">
+    <div className="md:py-[40px] h-[75%]  gap-[12px] md:overflow-y-auto px-[30px] md:px-[85px] md:p-[25px]">
       <PropertyDetailItem control={control}  maxValue={15}  name='propertyDetails.floors' label='Floors'/>
       <PropertyDetailItem control={control} maxValue={15}  name='propertyDetails.bedrooms' label='bedrooms'/>
       <PropertyDetailItem control={control} maxValue={15} name='propertyDetails.bathrooms' label='bathrooms'/>

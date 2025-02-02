@@ -1,6 +1,6 @@
-import { PropertyFeature } from "@/components/create-new-post/steps/FinalStep";
 import { TPropertyAuthority } from "@/enums/ownership";
 import { TPropertyType } from "@/enums/propertyType";
+import { PropertyFeature } from "@interfaces/formattingData/types";
 
 export type TPropertyUpdatePayload = {
   // Basic info

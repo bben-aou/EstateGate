@@ -32,7 +32,7 @@ const PropertyTypeStep = () => {
   }
 
   return (
-    <div className="h-[60%]">
+    <div className="h-[80vh] md:h-[60%]">
       <StepHeader label="stepper.propertyTypeStep.stepHeader.label" />
       <PropertiesList />
       <NextAndPreviousButtons

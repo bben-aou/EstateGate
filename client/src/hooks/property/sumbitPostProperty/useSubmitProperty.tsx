@@ -3,7 +3,7 @@ import {
   PropertyFeature,
   PropertyFormData,
 } from "@/interfaces/formattingData/types";
-import { usePublishProperty } from "@hooks/publisProperty/usePublishPropertyMutation";
+import { usePublishProperty } from "@/hooks/property/publisProperty/usePublishPropertyMutation";
 import { TPropertyUpdatePayload } from "@/interfaces/payloads/PropertyUpdatePayload";
 import { TPropertyType } from "@/enums/propertyType";
 import { TPropertyAuthority } from "@/enums/ownership";

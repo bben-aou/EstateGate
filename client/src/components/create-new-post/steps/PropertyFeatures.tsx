@@ -30,7 +30,7 @@ const PropertyFeatures = () => {
       }
     }
   return (
-    <div className="h-[60%]">
+    <div className="h-[80vh] md:h-[60%]">
       <StepHeader label="stepper.PropertyFeatures.stepHeader.label" hasSubtitle  subtitleLabel="stepper.houseFeatures.subtitle"/>
       <PropertyFeaturesList/>
       <NextAndPreviousButtons
