@@ -8,8 +8,6 @@ import ConditionalRendering from "@/components/common/ConditionalRendering";
 import { PropertyTitleSkeleton } from "@/components/loadingUi/propertyProfile/PropertyTitleSkeleton";
 import { TPropertyTitleAndPriceProps } from "@/interfaces/responses/property";
 
-
-
 const PropertyTitleAndPrice = ({
   city,
   price,
@@ -29,12 +27,12 @@ const PropertyTitleAndPrice = ({
   }
 
   return (
-    <div className="w-full h-32 py-2.5">
-      <div className="flex items-center justify-between">
-        <h1 className="font-medium text-[1.375rem] text-typography-10 tracking-[0.3px] max-w-[70%]">
+    <div className="w-full md:h-32 py-3 md:py-2.5">
+      <div className="flex flex-col md:flex-row  md:items-center justify-between">
+        <h1 className="font-medium text-[1.375rem] text-typography-10 tracking-[0.3px] w-full md:max-w-[70%]">
           {title}
         </h1>
-        <h1 className="text-[1.8125rem] font-semibold text-light-60">
+        <h1 className=" text-[1.5rem] md:text-[1.8125rem] font-semibold text-light-60">
           {formatAmount(price, intl.formatMessage({ id: "common.currency" }))}
         </h1>
       </div>

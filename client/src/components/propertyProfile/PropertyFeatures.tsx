@@ -14,7 +14,7 @@ const PropertyFeatures = (props: TPropertyFeaturesProps) => {
       <h1 className="text-[18px] text-typography-10 font-medium">
         <FormattedMessage id="components.propertyProfile.propertyFeatures.title" />
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
         {propertyFeatures.map((feature) => {
           const featureConfig = getFeatureConfig(feature);
 

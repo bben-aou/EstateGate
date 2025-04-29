@@ -117,6 +117,7 @@ export type TPropertyOwnerBadgeProps = {
   ownerJoiningDate: string;
   ownerId: string;
   isLoading?: boolean;
+  hide? : boolean;
 };
 
 export type TPropertyTitleAndPriceProps = {

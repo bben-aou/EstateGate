@@ -21,21 +21,27 @@ const PropertyProfile = () => {
   const { property, isLoading } = useGetProperty({
     propertyId: propertyId ?? "",
   });
+  console.log('🏠 ', property );
   const { propertyStructureArray } = usePropertyProfile(property);
+  if(!property){
+    return <>No House With this ID</>
+  }
   return (
     <div className="w-full h-[92vh] overflow-auto scroll-smooth">
       <div className="w-full h-fit xl:max-w-7xl xl:mx-auto self-center lg:px-[4.375rem] pt-[1.875rem]">
         <PhotoGrid photos={property?.photos ?? []} isLoading={isLoading} />
         <div className="max-w-6xl mx-auto px-4 flex flex-row-reverse justify-between gap-4">
-          <PropertyOwnerBadge
-            avatar={property?.owner.avatar ?? ""}
-            ownerFirstName={property?.owner.firstName ?? EMPTY_FIELD}
-            ownerLastName={property?.owner.lastName ?? EMPTY_FIELD}
-            ownerJoiningDate={property?.owner.createdAt ?? EMPTY_FIELD}
-            ownerId={property?.owner.id ?? ""}
-            isLoading={isLoading}
-          />
-          <div className="w-[75%] h-fit">
+          <div className="hidden md:flex">
+            <PropertyOwnerBadge
+              avatar={property?.owner.avatar ?? ""}
+              ownerFirstName={property?.owner.firstName ?? EMPTY_FIELD}
+              ownerLastName={property?.owner.lastName ?? EMPTY_FIELD}
+              ownerJoiningDate={property?.owner.createdAt ?? EMPTY_FIELD}
+              ownerId={property?.owner.id ?? ""}
+              isLoading={isLoading}
+            />
+          </div>
+          <div className=" w-full md:w-[75%] h-fit">
             <PropertyTitleAndPrice
               title={property?.title ?? EMPTY_FIELD}
               city={property?.city ?? EMPTY_FIELD}
@@ -71,6 +77,16 @@ const PropertyProfile = () => {
           propertyAddress={property?.address}
           isLoading={isLoading}
         />
+        <div className="flex md:hidden">
+          <PropertyOwnerBadge
+            avatar={property?.owner.avatar ?? ""}
+            ownerFirstName={property?.owner.firstName ?? EMPTY_FIELD}
+            ownerLastName={property?.owner.lastName ?? EMPTY_FIELD}
+            ownerJoiningDate={property?.owner.createdAt ?? EMPTY_FIELD}
+            ownerId={property?.owner.id ?? ""}
+            isLoading={isLoading}
+          />
+        </div>
         <PropertyRatingBadge
           averageRating={property?.averageRating}
           numberOfReviews={property?.reviews?.length}

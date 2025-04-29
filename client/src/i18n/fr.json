@@ -225,6 +225,7 @@
     "toast.addPropertyReview.title" : "Thank You for Your Review",
     "toast.addPropertyReview.description" : "Your property review has been successfully submitted",
     "toast.addPropertyReviewError.title" : "Failed to Add Review",
-    "toast.addPropertyReviewError.defaultMessage": "Failed to add review. Please try again."
+    "toast.addPropertyReviewError.defaultMessage": "Failed to add review. Please try again.",
+    "common.ownership.TENANT" : "Tenant"
 
 }

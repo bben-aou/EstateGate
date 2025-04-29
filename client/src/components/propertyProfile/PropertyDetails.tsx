@@ -14,7 +14,7 @@ const PropertyDetails = (props: TPropertyDetailsProps) => {
       <h1 className="text-[18px] text-typography-10 font-medium">
         <FormattedMessage id="components.propertyProfile.propertyDetails.title" />
       </h1>
-      <div className="grid grid-cols-3  gap-5 ">
+      <div className="grid grid-cols-2 md:grid-cols-3  gap-5 ">
         {propertyStructure.map((propertyDetail) => (
           <div
             key={propertyDetail.label}
